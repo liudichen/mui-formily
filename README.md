@@ -1,18 +1,14 @@
 # mui-formily
+mui formily组件
 
 ## Getting Started
 
 Install dependencies,
 
 ```bash
-$ npm i
+$ npm i mui-formily
 ```
 
-Start the dev server,
-
-```bash
-$ npm start
-```
 
 Build documentation,
 
