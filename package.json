@@ -1,6 +1,6 @@
 {
   "name": "mui-formily",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "scripts": {
     "start": "dumi dev",
     "docs:build": "dumi build",
@@ -36,6 +36,10 @@
     "@mui/material",
     "layout",
     "react"
+  ],
+  "files": [
+    "es",
+    "lib"
   ],
   "license": "MIT",
   "gitHooks": {
