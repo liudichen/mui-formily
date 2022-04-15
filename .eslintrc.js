@@ -1,17 +1,3 @@
-/*
- * @Description: 
- * @Author: 柳涤尘 https://www.iimm.ink
- * @LastEditors: 柳涤尘 liudichen@foxmail.com
- * @Date: 2022-04-15 17:40:47
- * @LastEditTime: 2022-04-15 17:42:26
- */
-/*
- * @Description:
- * @Author: 柳涤尘 https://www.iimm.ink
- * @LastEditors: 柳涤尘 liudichen@foxmail.com
- * @Date: 2022-04-15 08:59:51
- * @LastEditTime: 2022-04-15 12:16:18
- */
 module.exports = {
   extends: 'eslint-config-egg',
   parser: '@babel/eslint-parser',
@@ -32,7 +18,6 @@ module.exports = {
   },
   plugins: [
     'react',
-    'eslint-plugin-typescript',
   ],
   overrides: [
     {
