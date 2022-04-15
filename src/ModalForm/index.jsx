@@ -1,12 +1,13 @@
+/* eslint-disable no-unused-vars */
 /*
  * @Description:
  * @Author: 柳涤尘 https://www.iimm.ink
  * @LastEditors: 柳涤尘 liudichen@foxmail.com
  * @Date: 2022-04-04 20:15:19
- * @LastEditTime: 2022-04-11 23:07:11
+ * @LastEditTime: 2022-04-15 19:49:56
  */
 import PropTypes from 'prop-types';
-import { useMemo, useState } from 'react';
+import React, { useMemo, useState } from 'react';
 import { useMemoizedFn } from 'ahooks';
 import { Dialog, DialogActions, DialogContent, DialogTitle, IconButton, Link } from '@mui/material';
 import { createForm } from '@formily/core';
@@ -156,7 +157,7 @@ ModalForm.propTypes = {
   submitProps: PropTypes.shape({
     classes: PropTypes.object,
     disabled: PropTypes.bool,
-    loading: PropTypes.loading,
+    loading: PropTypes.bool,
     loadingIndicator: PropTypes.node,
     loadingPosition: PropTypes.oneOf([ 'center', 'start', 'end' ]), // 'center'
     sx,
