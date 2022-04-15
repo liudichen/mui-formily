@@ -1,3 +1,10 @@
+/*
+ * @Description:
+ * @Author: 柳涤尘 https://www.iimm.ink
+ * @LastEditors: 柳涤尘 liudichen@foxmail.com
+ * @Date: 2022-04-14 15:22:22
+ * @LastEditTime: 2022-04-15 18:24:38
+ */
 import React from 'react';
 import PropTypes from 'prop-types';
 import { useParentForm } from '@formily/react';
@@ -54,7 +61,7 @@ Reset.propTypes = {
   validate: PropTypes.bool, // 是否校验
   children: PropTypes.node,
   onResetValidateSuccess: PropTypes.func,
-  onResetValidateFailed: PropTypes.func,  
+  onResetValidateFailed: PropTypes.func,
   ...Button.propTypes,
   onClick: PropTypes.func,
 };
