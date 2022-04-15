@@ -1,13 +1,13 @@
 /*
- * @Description: 
+ * @Description:
  * @Author: 柳涤尘 https://www.iimm.ink
  * @LastEditors: 柳涤尘 liudichen@foxmail.com
  * @Date: 2022-04-14 15:22:22
- * @LastEditTime: 2022-04-14 15:32:20
+ * @LastEditTime: 2022-04-15 18:49:20
  */
 import { connect, mapProps } from '@formily/react';
 import { isVoidField } from '@formily/core';
-import { Autocomplete } from 'mui-formfield'
+import { Autocomplete } from 'mui-formfield';
 
 const FormilySelect = connect(
   Autocomplete,
