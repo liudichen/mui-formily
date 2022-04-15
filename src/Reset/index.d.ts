@@ -3,10 +3,10 @@
  * @Author: 柳涤尘 https://www.iimm.ink
  * @LastEditors: 柳涤尘 liudichen@foxmail.com
  * @Date: 2022-04-15 18:17:43
- * @LastEditTime: 2022-04-15 19:26:38
+ * @LastEditTime: 2022-04-15 20:22:34
  */
 import React from 'react';
-import { ButtonProps } from '@mui/material';
+import { ButtonProps } from '../types';
 
 export interface ResetProps extends ButtonProps {
   initial?: boolean,
