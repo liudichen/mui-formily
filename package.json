@@ -62,7 +62,7 @@
     "@mui/lab": "^5.0.0-alpha.77",
     "@mui/material": "^5.6.1",
     "ahooks": "^3.3.0",
-    "mui-formfield": "^0.1.9",
+    "mui-formfield": "^0.1.12",
     "prop-types": "^15.8.1",
     "react": "^16.8.0 || ^17.0.0",
     "react-dom": "^16.8.0 || ^17.0.0"
@@ -88,6 +88,7 @@
     "gh-pages": "^3.0.0",
     "lint-staged": "^10.0.7",
     "prettier": "^2.2.1",
+    "typescript": "^4.6.3",
     "yorkie": "^2.0.0"
   }
 }
