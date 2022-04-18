@@ -3,7 +3,7 @@
  * @Author: 柳涤尘 https://www.iimm.ink
  * @LastEditors: 柳涤尘 liudichen@foxmail.com
  * @Date: 2022-04-11 22:17:08
- * @LastEditTime: 2022-04-15 20:01:11
+ * @LastEditTime: 2022-04-18 18:46:02
  */
 export { default as Input, InputProps } from './Input';
 export { default as Select, SelectProps } from './Select';
@@ -15,4 +15,4 @@ export { default as Reset, ResetProps } from './Reset';
 export { default as Submit, SubmitProps } from './Submit';
 export { default as ModalForm, ModalFormProps } from './ModalForm';
 export { default as Upload, UploadProps } from './Upload';
-
+export { default as Transfer, TransferProps } from './Transfer';
