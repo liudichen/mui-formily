@@ -13,6 +13,6 @@ export interface SwitchProps extends Omit<Omit<Omit<FieldProps, 'label'>, 'toolt
   initialValue?: any,
 }
 
-declare const Switch: React.FunctionComponent<SwitchProps>;
+declare const FormilySwitch: React.FunctionComponent<SwitchProps>;
 
-export default Switch;
+export default FormilySwitch;

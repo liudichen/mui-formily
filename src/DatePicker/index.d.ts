@@ -6,6 +6,6 @@ export interface DatePickerProps extends Omit<Omit<Omit<FieldProps, 'label'>, 't
   initialValue?: any,
 }
 
-declare const DatePicker: React.FunctionComponent<DatePickerProps>;
+declare const FormilyDatePicker: React.FunctionComponent<DatePickerProps>;
 
-export default DatePicker;
+export default FormilyDatePicker;

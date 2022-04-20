@@ -3,7 +3,7 @@
  * @Author: 柳涤尘 https://www.iimm.ink
  * @LastEditors: 柳涤尘 liudichen@foxmail.com
  * @Date: 2022-04-15 19:06:07
- * @LastEditTime: 2022-04-15 19:14:25
+ * @LastEditTime: 2022-04-20 16:27:36
  */
 import React from 'react';
 import { fieldTransformProps, ToggleButtonGroupProps } from '../types';
@@ -14,9 +14,9 @@ export interface CheckboxGroupProps extends Omit<Omit<Omit<Omit<FieldProps, 'lab
   dataSource?: any[],
 }
 
-declare const CheckboxGroup: {
+declare const FormilyCheckboxGroup: {
   (props: CheckboxGroupProps): JSX.Element,
   Button: React.FunctionComponent<ToggleButtonGroupProps>,
 };
 
-export default CheckboxGroup;
+export default FormilyCheckboxGroup;

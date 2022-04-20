@@ -3,7 +3,7 @@
  * @Author: 柳涤尘 https://www.iimm.ink
  * @LastEditors: 柳涤尘 liudichen@foxmail.com
  * @Date: 2022-04-15 19:12:54
- * @LastEditTime: 2022-04-15 19:15:41
+ * @LastEditTime: 2022-04-20 16:29:30
  */
 import React from 'react';
 import { fieldTransformProps, ToggleButtonGroupProps } from '../types';
@@ -13,9 +13,9 @@ export interface RadioGroupProps extends Omit<Omit<Omit<Omit<FieldProps, 'label'
   initialValue?: any[],
   dataSource?: any[],
 }
-declare const RadioGroup: {
+declare const FormilyRadioGroup: {
   (props: RadioGroupProps): JSX.Element,
   Button: React.FunctionComponent<ToggleButtonGroupProps>,
 };
 
-export default RadioGroup;
+export default FormilyRadioGroup;
