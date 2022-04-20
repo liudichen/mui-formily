@@ -37,7 +37,7 @@ module.exports = {
     'no-unused-vars': [
       'warn',
       {
-        argsIgnorePattern: '(^_)|(^props$)|(^e$)',
+        argsIgnorePattern: '(^_)|(^props$)|(^e$)|(^React$)',
       },
     ],
     'arrow-parens': [ 'warn', 'always' ],
