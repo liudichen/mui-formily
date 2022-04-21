@@ -3,10 +3,11 @@
  * @Author: 柳涤尘 https://www.iimm.ink
  * @LastEditors: 柳涤尘 liudichen@foxmail.com
  * @Date: 2022-04-15 19:36:59
- * @LastEditTime: 2022-04-15 19:48:50
+ * @LastEditTime: 2022-04-21 11:06:43
  */
 import React from 'react';
 import { DialogActionsProps, DialogContentProps, DialogProps, DialogTitleProps } from '@mui/material';
+import { IFormProps } from '@formily/core';
 
 type variant = 'contained' | 'outlined' | 'text';
 type maxWidth = 'xs' | 'sm' | 'md' | 'lg' | 'xl' | false;
@@ -21,6 +22,11 @@ interface submitProps {
 }
 
 export interface ModalFormProps {
+  /**
+   * this is @formily/core createForm's props
+   * @default {validateFirst:true}
+   */
+  createFormOptions?: IFormProps,
   trigger: React.ReactNode,
   title?: React.ReactNode,
   titleProps?: DialogTitleProps,

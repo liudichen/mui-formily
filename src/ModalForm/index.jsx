@@ -4,7 +4,7 @@
  * @Author: 柳涤尘 https://www.iimm.ink
  * @LastEditors: 柳涤尘 liudichen@foxmail.com
  * @Date: 2022-04-04 20:15:19
- * @LastEditTime: 2022-04-15 19:49:56
+ * @LastEditTime: 2022-04-21 10:59:39
  */
 import PropTypes from 'prop-types';
 import React, { useMemo, useState } from 'react';
@@ -25,11 +25,11 @@ const ModalForm = (props) => {
     dialongProps, sx, maxWidth, fullWidth, fullScreen,
     children,
     showClose, showReset, showSubmit,
-    submitText, resetText, submitProps, resetProps,
+    submitText, resetText, submitProps, resetProps, createFormOptions,
     onFinish, destroyOnClose,
   } = props;
   const [ open, setOpen ] = useState(false);
-  const form = useMemo(() => createForm({ validateFirst: true }), []);
+  const form = useMemo(() => createForm({ validateFirst: true, ...(createFormOptions || {}) }), [ createFormOptions ]);
   const onClose = useMemoizedFn(() => {
     onCloseProps?.();
     setOpen(false);
@@ -120,6 +120,20 @@ ModalForm.defaultProps = {
   submitText: '提交',
 };
 ModalForm.propTypes = {
+  createFormOptions: PropTypes.shape({
+    values: PropTypes.object,
+    initialValues: PropTypes.object,
+    pattern: PropTypes.oneOf([ 'editable', 'disabled', 'readOnly', 'readPretty' ]),
+    display: PropTypes.oneOf([ 'visible', 'hidden', 'none' ]),
+    hidden: PropTypes.bool,
+    visible: PropTypes.bool,
+    editable: PropTypes.bool,
+    disabled: PropTypes.bool,
+    readOnly: PropTypes.bool,
+    readPretty: PropTypes.bool,
+    effects: PropTypes.func,
+    validateFirst: PropTypes.bool,
+  }),
   trigger: PropTypes.node.isRequired,
   title: PropTypes.node,
   titleProps: PropTypes.shape({
