@@ -3,11 +3,11 @@
  * @Author: 柳涤尘 https://www.iimm.ink
  * @LastEditors: 柳涤尘 liudichen@foxmail.com
  * @Date: 2022-04-15 19:36:59
- * @LastEditTime: 2022-04-21 12:01:00
+ * @LastEditTime: 2022-04-21 16:57:16
  */
 import React from 'react';
 import { DialogActionsProps, DialogContentProps, DialogProps, DialogTitleProps } from '@mui/material';
-import { IFormProps } from '@formily/core';
+import { IFormProps, Form } from '@formily/core';
 
 import { ResetProps } from '../Reset';
 import { SubmitProps } from '../Submit';
@@ -42,6 +42,12 @@ export interface ModalFormProps {
   destroyOnClose?: boolean,
 }
 
-declare const ModalForm: React.FunctionComponent<ModalFormProps>;
+interface refForm {
+  form?: Form,
+}
+
+type Ref = refForm | undefined | null;
+
+declare const ModalForm: React.ForwardRefRenderFunction<Ref, ModalFormProps>;
 
 export default ModalForm;
