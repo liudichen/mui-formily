@@ -4,7 +4,7 @@
  * @Author: 柳涤尘 https://www.iimm.ink
  * @LastEditors: 柳涤尘 liudichen@foxmail.com
  * @Date: 2022-04-04 20:15:19
- * @LastEditTime: 2022-04-21 10:59:39
+ * @LastEditTime: 2022-04-21 12:02:03
  */
 import PropTypes from 'prop-types';
 import React, { useMemo, useState } from 'react';
@@ -176,6 +176,8 @@ ModalForm.propTypes = {
     loadingPosition: PropTypes.oneOf([ 'center', 'start', 'end' ]), // 'center'
     sx,
     variant: PropTypes.oneOfType([ PropTypes.oneOf([ 'contained', 'outlined', 'text' ]), PropTypes.string ]), // 'contained'
+    onSubmitSuccess: PropTypes.func,
+    onSubmitFailed: PropTypes.func,
   }),
   resetText: PropTypes.node,
   resetProps: PropTypes.object,
