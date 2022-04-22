@@ -4,7 +4,7 @@
  * @Author: 柳涤尘 https://www.iimm.ink
  * @LastEditors: 柳涤尘 liudichen@foxmail.com
  * @Date: 2022-04-04 20:15:19
- * @LastEditTime: 2022-04-21 17:44:37
+ * @LastEditTime: 2022-04-22 10:04:41
  */
 import PropTypes from 'prop-types';
 import React, { forwardRef, useEffect, useImperativeHandle, useMemo, useState } from 'react';
@@ -29,7 +29,7 @@ const ModalForm = forwardRef((props, ref) => {
     onFinish, destroyOnClose,
   } = props;
   const [ open, setOpen ] = useState(false);
-  const form = useMemo(() => createForm({ validateFirst: true, ...(createFormOptions || {}) }), [ createFormOptions ]);
+  const form = useMemo(() => createForm({ validateFirst: true, ...(createFormOptions || {}) }));
 
   useImperativeHandle(ref, () => ({
     form,
@@ -44,15 +44,10 @@ const ModalForm = forwardRef((props, ref) => {
     if (res === true) {
       onClose();
       if (destroyOnClose) {
-        form?.reset();
+        form?.reset('*');
       }
     }
   });
-  useEffect(() => {
-    if (!open && form) {
-      form.reset('');
-    }
-  }, [ open ]);
   return (
     <>
       <Link
