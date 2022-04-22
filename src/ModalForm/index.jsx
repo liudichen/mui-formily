@@ -4,7 +4,7 @@
  * @Author: 柳涤尘 https://www.iimm.ink
  * @LastEditors: 柳涤尘 liudichen@foxmail.com
  * @Date: 2022-04-04 20:15:19
- * @LastEditTime: 2022-04-22 10:11:02
+ * @LastEditTime: 2022-04-22 10:48:13
  */
 import PropTypes from 'prop-types';
 import React, { forwardRef, useImperativeHandle, useMemo } from 'react';
@@ -124,7 +124,6 @@ ModalForm.defaultProps = {
   createFormOptions: { validateFirst: true },
 };
 ModalForm.propTypes = {
-  ref: PropTypes.object,
   createFormOptions: PropTypes.shape({
     values: PropTypes.object,
     initialValues: PropTypes.object,

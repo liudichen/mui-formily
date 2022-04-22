@@ -3,7 +3,7 @@
  * @Author: 柳涤尘 https://www.iimm.ink
  * @LastEditors: 柳涤尘 liudichen@foxmail.com
  * @Date: 2022-04-15 19:36:59
- * @LastEditTime: 2022-04-22 10:14:33
+ * @LastEditTime: 2022-04-22 10:48:05
  */
 import React from 'react';
 import { DialogActionsProps, DialogContentProps, DialogProps, DialogTitleProps } from '@mui/material';
@@ -40,7 +40,6 @@ export interface ModalFormProps {
   resetProps?: ResetProps,
   onFinish?: (value: object) => void,
   destroyOnClose?: boolean,
-  ref?: React.Ref<Form>,
 }
 
 declare const ModalForm: React.ForwardRefRenderFunction<Form, ModalFormProps>;
