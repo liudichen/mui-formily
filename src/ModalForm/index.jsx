@@ -4,11 +4,11 @@
  * @Author: 柳涤尘 https://www.iimm.ink
  * @LastEditors: 柳涤尘 liudichen@foxmail.com
  * @Date: 2022-04-04 20:15:19
- * @LastEditTime: 2022-04-22 10:04:41
+ * @LastEditTime: 2022-04-22 10:11:02
  */
 import PropTypes from 'prop-types';
-import React, { forwardRef, useEffect, useImperativeHandle, useMemo, useState } from 'react';
-import { useMemoizedFn } from 'ahooks';
+import React, { forwardRef, useImperativeHandle, useMemo } from 'react';
+import { useMemoizedFn, useSafeState } from 'ahooks';
 import { Dialog, DialogActions, DialogContent, DialogTitle, IconButton, Link } from '@mui/material';
 import { createForm } from '@formily/core';
 import { FormProvider } from '@formily/react';
@@ -28,12 +28,10 @@ const ModalForm = forwardRef((props, ref) => {
     submitText, resetText, submitProps, resetProps, createFormOptions,
     onFinish, destroyOnClose,
   } = props;
-  const [ open, setOpen ] = useState(false);
-  const form = useMemo(() => createForm({ validateFirst: true, ...(createFormOptions || {}) }));
+  const [ open, setOpen ] = useSafeState(false);
+  const form = useMemo(() => createForm(createFormOptions || {}));
 
-  useImperativeHandle(ref, () => ({
-    form,
-  }), [ form ]);
+  useImperativeHandle(ref, () => (form), [ form ]);
 
   const onClose = useMemoizedFn(() => {
     onCloseProps?.();
@@ -123,8 +121,10 @@ ModalForm.defaultProps = {
   showReset: true,
   resetText: '重置',
   submitText: '提交',
+  createFormOptions: { validateFirst: true },
 };
 ModalForm.propTypes = {
+  ref: PropTypes.object,
   createFormOptions: PropTypes.shape({
     values: PropTypes.object,
     initialValues: PropTypes.object,
