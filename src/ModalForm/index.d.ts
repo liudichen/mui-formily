@@ -3,7 +3,7 @@
  * @Author: 柳涤尘 https://www.iimm.ink
  * @LastEditors: 柳涤尘 liudichen@foxmail.com
  * @Date: 2022-04-15 19:36:59
- * @LastEditTime: 2022-04-22 10:48:05
+ * @LastEditTime: 2022-04-24 15:01:09
  */
 import React from 'react';
 import { DialogActionsProps, DialogContentProps, DialogProps, DialogTitleProps } from '@mui/material';
@@ -17,6 +17,7 @@ type maxWidth = 'xs' | 'sm' | 'md' | 'lg' | 'xl' | false;
 
 
 export interface ModalFormProps {
+  memo: boolean,
   /**
    * this is @formily/core createForm's props
    * @default {validateFirst:true}

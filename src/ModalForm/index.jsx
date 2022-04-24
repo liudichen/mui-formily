@@ -4,11 +4,11 @@
  * @Author: 柳涤尘 https://www.iimm.ink
  * @LastEditors: 柳涤尘 liudichen@foxmail.com
  * @Date: 2022-04-04 20:15:19
- * @LastEditTime: 2022-04-22 10:48:13
+ * @LastEditTime: 2022-04-24 15:02:25
  */
 import PropTypes from 'prop-types';
 import React, { forwardRef, useImperativeHandle, useMemo } from 'react';
-import { useMemoizedFn, useSafeState } from 'ahooks';
+import { useCreation, useMemoizedFn, useSafeState } from 'ahooks';
 import { Dialog, DialogActions, DialogContent, DialogTitle, IconButton, Link } from '@mui/material';
 import { createForm } from '@formily/core';
 import { FormProvider } from '@formily/react';
@@ -26,10 +26,11 @@ const ModalForm = forwardRef((props, ref) => {
     children,
     showClose, showReset, showSubmit,
     submitText, resetText, submitProps, resetProps, createFormOptions,
-    onFinish, destroyOnClose,
+    onFinish, destroyOnClose, memo,
   } = props;
   const [ open, setOpen ] = useSafeState(false);
-  const form = useMemo(() => createForm(createFormOptions || {}));
+  const deps = useCreation(() => { memo ? [] : undefined; }, [ memo ]);
+  const form = useMemo(() => createForm(createFormOptions || {}), deps);
 
   useImperativeHandle(ref, () => (form), [ form ]);
 
@@ -124,6 +125,7 @@ ModalForm.defaultProps = {
   createFormOptions: { validateFirst: true },
 };
 ModalForm.propTypes = {
+  memo: PropTypes.bool,
   createFormOptions: PropTypes.shape({
     values: PropTypes.object,
     initialValues: PropTypes.object,
