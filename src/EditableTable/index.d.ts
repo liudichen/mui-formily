@@ -3,7 +3,7 @@
  * @Author: 柳涤尘 https://www.iimm.ink
  * @LastEditors: 柳涤尘 liudichen@foxmail.com
  * @Date: 2022-04-20 16:19:09
- * @LastEditTime: 2022-04-20 16:25:43
+ * @LastEditTime: 2022-04-24 09:55:03
  */
 import React from 'react';
 import { fieldTransformProps } from '../types';
@@ -18,5 +18,14 @@ export interface EditableTableProps extends Omit<Omit<Omit<Omit<Omit<FieldProps,
 }
 
 declare const FormilyEditableTable: React.FunctionComponent<EditableTableProps>;
+
+declare const allAlignCenter: {
+  align: 'center',
+  headerAlign:'center',
+};
+
+export {
+  allAlignCenter,
+};
 
 export default FormilyEditableTable;
