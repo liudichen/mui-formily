@@ -3,10 +3,10 @@
  * @Author: 柳涤尘 https://www.iimm.ink
  * @LastEditors: 柳涤尘 liudichen@foxmail.com
  * @Date: 2022-04-15 19:36:59
- * @LastEditTime: 2022-04-24 15:01:09
+ * @LastEditTime: 2022-04-25 17:18:07
  */
 import React from 'react';
-import { DialogActionsProps, DialogContentProps, DialogProps, DialogTitleProps } from '@mui/material';
+import { DialogActionsProps, DialogContentProps, DialogProps, DialogTitleProps, LinkProps } from '@mui/material';
 import { IFormProps, Form } from '@formily/core';
 
 import { ResetProps } from '../Reset';
@@ -22,6 +22,7 @@ export interface ModalFormProps {
    * this is @formily/core createForm's props
    * @default {validateFirst:true}
    */
+  triggerProps?: LinkProps,
   createFormOptions?: IFormProps,
   trigger: React.ReactNode,
   title?: React.ReactNode,
@@ -37,6 +38,7 @@ export interface ModalFormProps {
   showSubmit?: boolean,
   showReset?: boolean,
   submitProps?: Omit<SubmitProps, 'onSubmit'>,
+  submitText?: React.ReactNode,
   resetText?: React.ReactNode,
   resetProps?: ResetProps,
   onFinish?: (value: object) => void,

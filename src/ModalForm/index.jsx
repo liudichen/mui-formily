@@ -4,7 +4,7 @@
  * @Author: 柳涤尘 https://www.iimm.ink
  * @LastEditors: 柳涤尘 liudichen@foxmail.com
  * @Date: 2022-04-04 20:15:19
- * @LastEditTime: 2022-04-24 15:02:25
+ * @LastEditTime: 2022-04-25 17:16:44
  */
 import PropTypes from 'prop-types';
 import React, { forwardRef, useImperativeHandle, useMemo } from 'react';
@@ -21,7 +21,7 @@ import { sx, dialog } from './propTypes';
 
 const ModalForm = forwardRef((props, ref) => {
   const {
-    trigger, title, titleProps, contentProps, actionsProps, onClose: onCloseProps,
+    trigger, title, titleProps, contentProps, actionsProps, onClose: onCloseProps, triggerProps,
     dialongProps, sx, maxWidth, fullWidth, fullScreen,
     children,
     showClose, showReset, showSubmit,
@@ -50,9 +50,12 @@ const ModalForm = forwardRef((props, ref) => {
   return (
     <>
       <Link
-        onClick={() => setOpen(true)}
-        underline='none'
-        sx={{ cursor: 'pointer' }}
+        {...{
+          underline: 'none',
+          sx: { cursor: 'pointer' },
+          ...(triggerProps || {}),
+          onClick: () => setOpen(true),
+        }}
       >
         {trigger}
       </Link>
@@ -126,6 +129,11 @@ ModalForm.defaultProps = {
 };
 ModalForm.propTypes = {
   memo: PropTypes.bool,
+  triggerProps: PropTypes.shape({
+    sx: PropTypes.object,
+    style: PropTypes.object,
+    underline: PropTypes.oneOf([ 'none', 'always', 'hover' ]),
+  }),
   createFormOptions: PropTypes.shape({
     values: PropTypes.object,
     initialValues: PropTypes.object,
