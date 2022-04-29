@@ -4,7 +4,7 @@
  * @Author: 柳涤尘 https://www.iimm.ink
  * @LastEditors: 柳涤尘 liudichen@foxmail.com
  * @Date: 2022-04-04 20:15:19
- * @LastEditTime: 2022-04-25 17:16:44
+ * @LastEditTime: 2022-04-29 22:51:25
  */
 import PropTypes from 'prop-types';
 import React, { forwardRef, useImperativeHandle, useMemo } from 'react';
@@ -27,6 +27,7 @@ const ModalForm = forwardRef((props, ref) => {
     showClose, showReset, showSubmit,
     submitText, resetText, submitProps, resetProps, createFormOptions,
     onFinish, destroyOnClose, memo,
+    disabled,
   } = props;
   const [ open, setOpen ] = useSafeState(false);
   const deps = useCreation(() => { memo ? [] : undefined; }, [ memo ]);
@@ -54,7 +55,7 @@ const ModalForm = forwardRef((props, ref) => {
           underline: 'none',
           sx: { cursor: 'pointer' },
           ...(triggerProps || {}),
-          onClick: () => setOpen(true),
+          onClick: () => !disabled && setOpen(true),
         }}
       >
         {trigger}
@@ -128,6 +129,7 @@ ModalForm.defaultProps = {
   createFormOptions: { validateFirst: true },
 };
 ModalForm.propTypes = {
+  dataRef: PropTypes.object,
   memo: PropTypes.bool,
   triggerProps: PropTypes.shape({
     sx: PropTypes.object,
