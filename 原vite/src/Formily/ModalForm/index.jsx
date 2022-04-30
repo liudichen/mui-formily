@@ -3,7 +3,7 @@
  * @Author: 柳涤尘 https://www.iimm.ink
  * @LastEditors: 柳涤尘 liudichen@foxmail.com
  * @Date: 2022-04-04 20:15:19
- * @LastEditTime: 2022-04-11 23:07:11
+ * @LastEditTime: 2022-04-30 13:43:38
  */
 import PropTypes from 'prop-types';
 import { useMemo, useState } from 'react';
@@ -13,7 +13,6 @@ import { createForm } from '@formily/core';
 import { FormProvider } from '@formily/react';
 import CloseIcon from '@mui/icons-material/Close';
 
-// import Space from '@/components/Space';
 import Reset from '../Reset';
 import Submit from '../Submit';
 import { sx, dialog } from './propTypes';
@@ -86,7 +85,6 @@ const ModalForm = (props) => {
           <DialogActions
             {...(actionsProps || {})}
           >
-            {/* <Space> */}
             { showReset && (
               <Reset {...(resetProps || {})}>
                 {resetText}
@@ -102,7 +100,6 @@ const ModalForm = (props) => {
                 {submitText}
               </Submit>
             )}
-            {/* </Space> */}
           </DialogActions>
         </FormProvider>
       </Dialog>
