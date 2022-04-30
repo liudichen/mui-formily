@@ -23,6 +23,7 @@ const FormilySwitch = connect(
     if (isVoidField(field)) return props;
     return {
       showHelperText: true,
+      fullWidth: true,
       error: field.selfInvalid,
       helperText: field.selfErrors.join(),
       ...props,

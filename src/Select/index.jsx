@@ -5,7 +5,6 @@
  * @Date: 2022-04-14 15:22:22
  * @LastEditTime: 2022-04-15 18:49:20
  */
-import React from 'react';
 import { connect, mapProps } from '@formily/react';
 import { isVoidField } from '@formily/core';
 import { Autocomplete } from 'mui-formfield';
@@ -25,6 +24,7 @@ const FormilySelect = connect(
     if (isVoidField(field)) return props;
     return {
       showHelperText: true,
+      fullWidth: true,
       error: field.selfInvalid,
       helperText: field.selfErrors.join(),
       ...props,
