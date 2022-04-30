@@ -4,7 +4,7 @@
  * @Author: 柳涤尘 https://www.iimm.ink
  * @LastEditors: 柳涤尘 liudichen@foxmail.com
  * @Date: 2022-04-04 20:15:19
- * @LastEditTime: 2022-04-30 11:35:29
+ * @LastEditTime: 2022-04-30 16:08:51
  */
 import PropTypes from 'prop-types';
 import React, { forwardRef, useImperativeHandle, useMemo } from 'react';
@@ -40,7 +40,7 @@ const ModalForm = forwardRef((props, ref) => {
     setOpen(false);
   });
   const onSubmit = useMemoizedFn(async (values) => {
-    const res = await onFinish(values);
+    const res = await onFinish?.(values);
     if (res === true) {
       onClose();
       if (destroyOnClose) {
