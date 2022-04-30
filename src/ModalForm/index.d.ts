@@ -3,7 +3,7 @@
  * @Author: 柳涤尘 https://www.iimm.ink
  * @LastEditors: 柳涤尘 liudichen@foxmail.com
  * @Date: 2022-04-15 19:36:59
- * @LastEditTime: 2022-04-29 22:49:41
+ * @LastEditTime: 2022-04-30 11:37:24
  */
 import React from 'react';
 import { DialogActionsProps, DialogContentProps, DialogProps, DialogTitleProps, LinkProps } from '@mui/material';
@@ -21,6 +21,7 @@ interface ref {
 
 export interface ModalFormProps {
   dataRef?: ref,
+  disabled?: boolean,
   memo?: boolean,
   /**
    * this is @formily/core createForm's props
