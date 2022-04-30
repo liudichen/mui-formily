@@ -62,10 +62,10 @@
     "@mui/lab": "^5.0.0-alpha.77",
     "@mui/material": "^5.6.2",
     "ahooks": "^3.3.8",
-    "mui-formfield": "^0.1.23",
+    "mui-formfield": "^0.2.0",
     "prop-types": "^15.8.1",
-    "react": "^16.8.0 || ^17.0.0",
-    "react-dom": "^16.8.0 || ^17.0.0"
+    "react": ">=16.8.0",
+    "react-dom": ">=16.8.0"
   },
   "devDependencies": {
     "@babel/eslint-parser": "^7.17.0",
