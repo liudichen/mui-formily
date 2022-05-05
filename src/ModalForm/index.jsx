@@ -4,7 +4,7 @@
  * @Author: 柳涤尘 https://www.iimm.ink
  * @LastEditors: 柳涤尘 liudichen@foxmail.com
  * @Date: 2022-04-04 20:15:19
- * @LastEditTime: 2022-04-30 16:08:51
+ * @LastEditTime: 2022-05-05 22:16:54
  */
 import PropTypes from 'prop-types';
 import React, { forwardRef, useImperativeHandle, useMemo } from 'react';
@@ -26,7 +26,7 @@ const ModalForm = forwardRef((props, ref) => {
     children,
     showClose, showReset, showSubmit,
     submitText, resetText, submitProps, resetProps, createFormOptions,
-    onFinish, destroyOnClose, memo,
+    onFinish, destroyOnClose, memo, extraActions,
     disabled,
   } = props;
   const [ open, setOpen ] = useSafeState(false);
@@ -96,6 +96,9 @@ const ModalForm = forwardRef((props, ref) => {
             {...(actionsProps || {})}
           >
             {/* <Space> */}
+            { !!extraActions && (
+              extraActions
+            )}
             { showReset && (
               <Reset {...(resetProps || {})}>
                 {resetText}
@@ -129,6 +132,10 @@ ModalForm.defaultProps = {
   createFormOptions: { validateFirst: true },
 };
 ModalForm.propTypes = {
+  extraActions: PropTypes.oneOfType([
+    PropTypes.node,
+    PropTypes.arrayOf(PropTypes.node),
+  ]),
   dataRef: PropTypes.shape({
     current: PropTypes.any,
   }),
