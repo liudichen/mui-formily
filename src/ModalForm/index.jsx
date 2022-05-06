@@ -4,7 +4,7 @@
  * @Author: 柳涤尘 https://www.iimm.ink
  * @LastEditors: 柳涤尘 liudichen@foxmail.com
  * @Date: 2022-04-04 20:15:19
- * @LastEditTime: 2022-05-05 22:16:54
+ * @LastEditTime: 2022-05-06 10:19:02
  */
 import PropTypes from 'prop-types';
 import React, { forwardRef, useImperativeHandle, useMemo } from 'react';
@@ -55,7 +55,10 @@ const ModalForm = forwardRef((props, ref) => {
           underline: 'none',
           sx: { cursor: 'pointer' },
           ...(triggerProps || {}),
-          onClick: () => !disabled && setOpen(true),
+          onClick: (e) => {
+            // e?.stopPropagation?.();
+            !disabled && setOpen(true);
+          },
         }}
       >
         {trigger}
