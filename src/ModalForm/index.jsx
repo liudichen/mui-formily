@@ -4,7 +4,7 @@
  * @Author: 柳涤尘 https://www.iimm.ink
  * @LastEditors: 柳涤尘 liudichen@foxmail.com
  * @Date: 2022-04-04 20:15:19
- * @LastEditTime: 2022-05-05 22:16:54
+ * @LastEditTime: 2022-05-07 21:19:28
  */
 import PropTypes from 'prop-types';
 import React, { forwardRef, useImperativeHandle, useMemo } from 'react';
@@ -17,7 +17,7 @@ import CloseIcon from '@mui/icons-material/Close';
 // import Space from '@/components/Space';
 import Reset from '../Reset';
 import Submit from '../Submit';
-import { sx, dialog } from './propTypes';
+import { sx, dialog, createFormOptions } from '../propTypes';
 
 const ModalForm = forwardRef((props, ref) => {
   const {
@@ -146,20 +146,7 @@ ModalForm.propTypes = {
     style: PropTypes.object,
     underline: PropTypes.oneOf([ 'none', 'always', 'hover' ]),
   }),
-  createFormOptions: PropTypes.shape({
-    values: PropTypes.object,
-    initialValues: PropTypes.object,
-    pattern: PropTypes.oneOf([ 'editable', 'disabled', 'readOnly', 'readPretty' ]),
-    display: PropTypes.oneOf([ 'visible', 'hidden', 'none' ]),
-    hidden: PropTypes.bool,
-    visible: PropTypes.bool,
-    editable: PropTypes.bool,
-    disabled: PropTypes.bool,
-    readOnly: PropTypes.bool,
-    readPretty: PropTypes.bool,
-    effects: PropTypes.func,
-    validateFirst: PropTypes.bool,
-  }),
+  createFormOptions,
   trigger: PropTypes.node.isRequired,
   title: PropTypes.node,
   titleProps: PropTypes.shape({
