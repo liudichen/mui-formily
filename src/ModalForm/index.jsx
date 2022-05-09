@@ -17,13 +17,11 @@ const ModalForm = forwardRef((props, ref) => {
     children,
     showClose, showReset, showSubmit,
     submitText, resetText, submitProps, resetProps, createFormOptions,
-    // eslint-disable-next-line no-unused-vars
-    onFinish, destroyOnClose, memo, extraActions,
+    onFinish, destroyOnClose, extraActions,
     disabled,
   } = props;
   const [ open, setOpen ] = useSafeState(false);
-  // const deps = useCreation(() => { memo ? [] : undefined; }, [ memo ]);
-  const form = useMemo(() => createForm(createFormOptions || {}), []);
+  const form = useMemo(() => createForm(createFormOptions), []);
 
   useImperativeHandle(ref, () => (form), [ form ]);
 
@@ -132,7 +130,6 @@ ModalForm.propTypes = {
     current: PropTypes.any,
   }),
   disabled: PropTypes.bool,
-  memo: PropTypes.bool,
   triggerProps: PropTypes.shape({
     sx: PropTypes.object,
     style: PropTypes.object,
