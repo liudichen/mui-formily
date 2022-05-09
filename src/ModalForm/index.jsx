@@ -23,7 +23,7 @@ const ModalForm = forwardRef((props, ref) => {
   const [ open, setOpen ] = useSafeState(false);
   const form = useMemo(() => createForm(createFormOptions), []);
 
-  useImperativeHandle(ref, () => (form), [ form ]);
+  useImperativeHandle(ref, () => form, [ form ]);
 
   const onClose = useMemoizedFn(() => {
     onCloseProps?.();
