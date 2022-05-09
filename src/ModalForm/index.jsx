@@ -1,15 +1,3 @@
-/* eslint-disable no-unused-vars */
-/*
- * @Description:
- * @Author: 柳涤尘 https://www.iimm.ink
- * @LastEditors: 柳涤尘 liudichen@foxmail.com
- * @Date: 2022-04-04 20:15:19
-<<<<<<< HEAD
- * @LastEditTime: 2022-05-06 10:19:02
-=======
- * @LastEditTime: 2022-05-07 21:19:28
->>>>>>> 497cda28c4b718c35aa476e99e06efa8f684c98b
- */
 import PropTypes from 'prop-types';
 import React, { forwardRef, useImperativeHandle, useMemo } from 'react';
 import { useCreation, useMemoizedFn, useSafeState } from 'ahooks';
@@ -18,7 +6,6 @@ import { createForm } from '@formily/core';
 import { FormProvider } from '@formily/react';
 import CloseIcon from '@mui/icons-material/Close';
 
-// import Space from '@/components/Space';
 import Reset from '../Reset';
 import Submit from '../Submit';
 import { sx, dialog, createFormOptions } from '../propTypes';
@@ -60,7 +47,6 @@ const ModalForm = forwardRef((props, ref) => {
           sx: { cursor: 'pointer' },
           ...(triggerProps || {}),
           onClick: (e) => {
-            // e?.stopPropagation?.();
             !disabled && setOpen(true);
           },
         }}
@@ -102,7 +88,6 @@ const ModalForm = forwardRef((props, ref) => {
           <DialogActions
             {...(actionsProps || {})}
           >
-            {/* <Space> */}
             { !!extraActions && (
               extraActions
             )}
@@ -121,7 +106,6 @@ const ModalForm = forwardRef((props, ref) => {
                 {submitText}
               </Submit>
             )}
-            {/* </Space> */}
           </DialogActions>
         </FormProvider>
       </Dialog>
