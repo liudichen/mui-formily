@@ -19,13 +19,4 @@ export interface EditableTableProps extends Omit<Omit<Omit<Omit<Omit<FieldProps,
 
 declare const FormilyEditableTable: React.FunctionComponent<EditableTableProps>;
 
-declare const allAlignCenter: {
-  align: 'center',
-  headerAlign:'center',
-};
-
-export {
-  allAlignCenter,
-};
-
 export default FormilyEditableTable;

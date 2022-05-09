@@ -18,7 +18,7 @@ export { default as CheckboxGroup, CheckboxGroupProps } from './CheckboxGroup';
 export { default as RadioGroup, RadioGroupProps } from './RadioGroup';
 export { default as Upload, UploadProps } from './Upload';
 export { default as Transfer, TransferProps } from './Transfer';
-export { default as EditableTable, EditableTableProps, allAlignCenter } from './EditableTable';
+export { default as EditableTable, EditableTableProps } from './EditableTable';
 
 export { default as Reset, ResetProps } from './Reset';
 export { default as Submit, SubmitProps } from './Submit';
