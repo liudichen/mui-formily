@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 import React, { forwardRef, useImperativeHandle, useMemo } from 'react';
-import { useCreation, useMemoizedFn, useSafeState } from 'ahooks';
+import { useMemoizedFn, useSafeState } from 'ahooks';
 import { Dialog, DialogActions, DialogContent, DialogTitle, IconButton, Link } from '@mui/material';
 import { createForm } from '@formily/core';
 import { FormProvider } from '@formily/react';
@@ -17,12 +17,13 @@ const ModalForm = forwardRef((props, ref) => {
     children,
     showClose, showReset, showSubmit,
     submitText, resetText, submitProps, resetProps, createFormOptions,
+    // eslint-disable-next-line no-unused-vars
     onFinish, destroyOnClose, memo, extraActions,
     disabled,
   } = props;
   const [ open, setOpen ] = useSafeState(false);
-  const deps = useCreation(() => { memo ? [] : undefined; }, [ memo ]);
-  const form = useMemo(() => createForm(createFormOptions || {}), deps);
+  // const deps = useCreation(() => { memo ? [] : undefined; }, [ memo ]);
+  const form = useMemo(() => createForm(createFormOptions || {}), []);
 
   useImperativeHandle(ref, () => (form), [ form ]);
 
