@@ -2,8 +2,8 @@
  * @Description:
  * @Author: 柳涤尘 https://www.iimm.ink
  * @LastEditors: 柳涤尘 liudichen@foxmail.com
- * @Date: 2022-04-11 23:06:28
- * @LastEditTime: 2022-04-11 23:06:28
+ * @Date: 2022-05-07 21:16:46
+ * @LastEditTime: 2022-05-07 21:18:39
  */
 import PropTypes from 'prop-types';
 
@@ -54,7 +54,23 @@ const dialog = {
   TransitionProps: PropTypes.object,
 };
 
+const createFormOptions = PropTypes.shape({
+  values: PropTypes.object,
+  initialValues: PropTypes.object,
+  pattern: PropTypes.oneOf([ 'editable', 'disabled', 'readOnly', 'readPretty' ]),
+  display: PropTypes.oneOf([ 'visible', 'hidden', 'none' ]),
+  hidden: PropTypes.bool,
+  visible: PropTypes.bool,
+  editable: PropTypes.bool,
+  disabled: PropTypes.bool,
+  readOnly: PropTypes.bool,
+  readPretty: PropTypes.bool,
+  effects: PropTypes.func,
+  validateFirst: PropTypes.bool,
+});
+
 export {
+  createFormOptions,
   sx,
   dialog,
 };
