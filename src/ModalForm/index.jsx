@@ -12,12 +12,13 @@ import { sx, dialog, createFormOptions } from '../propTypes';
 
 const ModalForm = forwardRef((props, ref) => {
   const {
-    trigger, title, titleProps, contentProps, actionsProps, onClose: onCloseProps, triggerProps,
+    trigger, title, titleProps, contentProps, actionsProps, triggerProps,
     dialongProps, sx, maxWidth, fullWidth, fullScreen,
     children,
     showClose, showReset, showSubmit,
     submitText, resetText, submitProps, resetProps, createFormOptions,
     onFinish, destroyOnClose, extraActions,
+    open: openProp, onClose: onCloseProp,
     disabled,
   } = props;
   const [ open, setOpen ] = useSafeState(false);
@@ -26,8 +27,10 @@ const ModalForm = forwardRef((props, ref) => {
   useImperativeHandle(ref, () => form, [ form ]);
 
   const onClose = useMemoizedFn(() => {
-    onCloseProps?.();
-    setOpen(false);
+    onCloseProp?.();
+    if (trigger) {
+      setOpen(false);
+    }
   });
   const onSubmit = useMemoizedFn(async (values) => {
     const res = await onFinish?.(values);
@@ -38,78 +41,140 @@ const ModalForm = forwardRef((props, ref) => {
       }
     }
   });
+  if (trigger) {
+    return (
+      <>
+        <Link
+          {...{
+            underline: 'none',
+            sx: { cursor: 'pointer' },
+            ...(triggerProps || {}),
+            onClick: (e) => {
+              !disabled && setOpen(true);
+            },
+          }}
+        >
+          {trigger}
+        </Link>
+        <Dialog
+          {...{
+            ...(dialongProps || {}),
+            open,
+            onClose,
+            fullScreen,
+            fullWidth,
+            maxWidth,
+            sx,
+          }}
+        >
+          <FormProvider form={form}>
+            <DialogTitle {...{ ...(titleProps || {}), sx: { fontSize: '16px', ...(titleProps?.sx || {}) } }}>
+              {title}
+              { showClose && (
+                <IconButton
+                  aria-label='close'
+                  onClick={onClose}
+                  sx={{
+                    position: 'absolute',
+                    right: 8,
+                    top: 8,
+                    color: (theme) => theme.palette.grey[500],
+                  }}
+                >
+                  <CloseIcon />
+                </IconButton>
+              )}
+            </DialogTitle>
+            <DialogContent {...(contentProps || {})}>
+              {children}
+            </DialogContent>
+            <DialogActions
+              {...(actionsProps || {})}
+            >
+              { !!extraActions && (
+                extraActions
+              )}
+              { showReset && (
+                <Reset {...(resetProps || {})}>
+                  {resetText}
+                </Reset>
+              )}
+              { showSubmit && (
+                <Submit
+                  {...{
+                    ...(submitProps || {}),
+                    onSubmit,
+                  }}
+                >
+                  {submitText}
+                </Submit>
+              )}
+            </DialogActions>
+          </FormProvider>
+        </Dialog>
+      </>
+    );
+  }
+
   return (
-    <>
-      <Link
-        {...{
-          underline: 'none',
-          sx: { cursor: 'pointer' },
-          ...(triggerProps || {}),
-          onClick: (e) => {
-            !disabled && setOpen(true);
-          },
-        }}
-      >
-        {trigger}
-      </Link>
-      <Dialog
-        {...{
-          ...(dialongProps || {}),
-          open,
-          onClose,
-          fullScreen,
-          fullWidth,
-          maxWidth,
-          sx,
-        }}
-      >
-        <FormProvider form={form}>
-          <DialogTitle {...{ ...(titleProps || {}), sx: { fontSize: '16px', ...(titleProps?.sx || {}) } }}>
-            {title}
-            { showClose && (
-              <IconButton
-                aria-label='close'
-                onClick={onClose}
-                sx={{
-                  position: 'absolute',
-                  right: 8,
-                  top: 8,
-                  color: (theme) => theme.palette.grey[500],
-                }}
-              >
-                <CloseIcon />
-              </IconButton>
-            )}
-          </DialogTitle>
-          <DialogContent {...(contentProps || {})}>
-            {children}
-          </DialogContent>
-          <DialogActions
-            {...(actionsProps || {})}
-          >
-            { !!extraActions && (
-              extraActions
-            )}
-            { showReset && (
-              <Reset {...(resetProps || {})}>
-                {resetText}
-              </Reset>
-            )}
-            { showSubmit && (
-              <Submit
-                {...{
-                  ...(submitProps || {}),
-                  onSubmit,
-                }}
-              >
-                {submitText}
-              </Submit>
-            )}
-          </DialogActions>
-        </FormProvider>
-      </Dialog>
-    </>
+    <Dialog
+      {...{
+        ...(dialongProps || {}),
+        open: !!openProp,
+        onClose,
+        fullScreen,
+        fullWidth,
+        maxWidth,
+        sx,
+      }}
+    >
+      <FormProvider form={form}>
+        <DialogTitle {...{ ...(titleProps || {}), sx: { fontSize: '16px', ...(titleProps?.sx || {}) } }}>
+          {title}
+          { showClose && (
+            <IconButton
+              aria-label='close'
+              onClick={onClose}
+              sx={{
+                position: 'absolute',
+                right: 8,
+                top: 8,
+                color: (theme) => theme.palette.grey[500],
+              }}
+            >
+              <CloseIcon />
+            </IconButton>
+          )}
+        </DialogTitle>
+        <DialogContent {...(contentProps || {})}>
+          {children}
+        </DialogContent>
+        <DialogActions
+          {...(actionsProps || {})}
+        >
+          { !!extraActions && (
+            extraActions
+          )}
+          { showReset && (
+            <Reset {...(resetProps || {})}>
+              {resetText}
+            </Reset>
+          )}
+          { showSubmit && (
+            <Submit
+              {...{
+                ...(submitProps || {}),
+                onSubmit,
+              }}
+            >
+              {submitText}
+            </Submit>
+          )}
+        </DialogActions>
+      </FormProvider>
+    </Dialog>
   );
+
 });
 
 ModalForm.defaultProps = {
@@ -136,7 +201,7 @@ ModalForm.propTypes = {
     underline: PropTypes.oneOf([ 'none', 'always', 'hover' ]),
   }),
   createFormOptions,
-  trigger: PropTypes.node.isRequired,
+  trigger: PropTypes.node,
   title: PropTypes.node,
   titleProps: PropTypes.shape({
     classes: PropTypes.object,

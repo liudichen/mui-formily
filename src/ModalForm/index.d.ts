@@ -3,7 +3,7 @@
  * @Author: 柳涤尘 https://www.iimm.ink
  * @LastEditors: 柳涤尘 liudichen@foxmail.com
  * @Date: 2022-04-15 19:36:59
- * @LastEditTime: 2022-05-09 13:37:07
+ * @LastEditTime: 2022-05-10 22:30:07
  */
 import React from 'react';
 import { DialogActionsProps, DialogContentProps, DialogProps, DialogTitleProps, LinkProps } from '@mui/material';
@@ -29,7 +29,7 @@ export interface ModalFormProps {
    */
   triggerProps?: LinkProps,
   createFormOptions?: IFormProps,
-  trigger: React.ReactNode,
+  trigger?: React.ReactNode,
   title?: React.ReactNode,
   titleProps?: DialogTitleProps,
   contentProps?: DialogContentProps,
