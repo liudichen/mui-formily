@@ -3,7 +3,7 @@
  * @Author: 柳涤尘 https://www.iimm.ink
  * @LastEditors: 柳涤尘 liudichen@foxmail.com
  * @Date: 2022-05-09 13:46:49
- * @LastEditTime: 2022-05-09 14:45:47
+ * @LastEditTime: 2022-05-10 10:34:53
  */
 import PropTypes from 'prop-types';
 import React, { forwardRef, useImperativeHandle, useMemo } from 'react';
@@ -14,17 +14,34 @@ import { Space } from 'mui-component';
 
 import Submit from '../../Submit';
 import { createFormOptions } from '../../propTypes';
+import { useMemoizedFn } from 'ahooks';
 
 const StepForm = forwardRef((props, ref) => {
-  const { stepIndex, stepsCount, onSubmit, onPrevious, submitProps, nextText, previousText, createFormOptions, children } = props;
+  const { stepIndex, stepsCount, onSubmit, onPrevious, submitProps, nextText, previousText, createFormOptions, children, initialValues, showStepReset, stepResetMode, resetProps, resetText } = props;
   const form = useMemo(() => createForm(createFormOptions), []);
   useImperativeHandle(ref, () => form, [ form ]);
+  const handleReset = useMemoizedFn(async () => {
+    if (stepResetMode === 'initial') {
+      await form?.setInitialValues?.(initialValues || {});
+      form?.reset?.('*');
+    } else if (stepResetMode === 'lastCommit') {
+      form?.reset?.('*');
+    }
+  });
   return (
     <>
       <FormProvider form={form}>
         { children }
         <Grid container>
           <Space>
+            { showStepReset && (
+              <Button
+                { ...(resetProps || {})}
+                onClick={handleReset}
+              >
+                { resetText }
+              </Button>
+            )}
             { !!stepIndex && (
               <Button
                 onClick={onPrevious}
@@ -50,6 +67,8 @@ StepForm.defaultProps = {
   submitProps: { size: 'small' },
   nextText: [ '下一步', '提交' ],
   previousText: '上一步',
+  resetText: '重置',
+  resetProps: { variant: 'outlined', color: 'sencondary' },
 };
 
 StepForm.propTypes = {
@@ -68,12 +87,33 @@ StepForm.propTypes = {
   previousValues: PropTypes.object, // 此步骤之前所有步骤的values汇总
   // -------------- 2 -------------
 
+  // -------------- 3 -------------
+  // 融合props
+  initialValues: PropTypes.object, // 直接通过props传递的initialValues，如果createFormOption里指定了initalValues则此值不会生效，而只会用来重置
+  showStepReset: PropTypes.bool, // 是否显示步骤的重置按钮，如果没设置则采用父级StepsForm设置
+  stepstepResetMode: PropTypes.oneOf([ 'initial', 'lastCommit' ]), // 重置模式：重置到初始状态，或者上次提交时的状态
+  // -------------- 3 -------------
+
   //-------------------
   createFormOptions,
   onSubmit: PropTypes.func,
   onPrevious: PropTypes.func,
   previousText: PropTypes.node,
   nextText: PropTypes.arrayOf(PropTypes.node),
+  resetText: PropTypes.node,
+  resetProps: PropTypes.shape({
+    size: PropTypes.oneOfType([
+      PropTypes.oneOf([ 'small', 'medium', 'large' ]),
+      PropTypes.string,
+    ]),
+    disabled: PropTypes.bool,
+    color: PropTypes.oneOfType([
+      PropTypes.oneOf([ 'inherit', 'primary', 'secondary', 'success', 'error', 'info', 'warning' ]),
+      PropTypes.string,
+    ]),
+    variant: PropTypes.oneOf([ 'text', 'outlined', 'contained' ]),
+    sx: PropTypes.object,
+  }),
   submitProps: PropTypes.shape({
     onSubmitFailed: PropTypes.func,
     onSubmitSuccess: PropTypes.func,

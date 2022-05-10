@@ -3,14 +3,14 @@
  * @Author: 柳涤尘 https://www.iimm.ink
  * @LastEditors: 柳涤尘 liudichen@foxmail.com
  * @Date: 2022-05-09 13:46:38
- * @LastEditTime: 2022-05-09 14:55:32
+ * @LastEditTime: 2022-05-10 10:52:51
  */
 import PropTypes from 'prop-types';
 import { Button } from '@mui/material';
 import { Result, Space } from 'mui-component';
 
 const DefaultCompleteRender = (props) => {
-  const { onReset, resultActions, resultTitle, resultSubTitle, showResultReset, resetText, resetProps } = props;
+  const { onReset, resultActions, resultTitle, resultSubTitle, showResultReset, resultResetText, resultResetProps } = props;
   return (
     <Result
       status='success'
@@ -20,10 +20,10 @@ const DefaultCompleteRender = (props) => {
         <Space>
           { showResultReset && (
             <Button
-              {...(resetProps || {})}
+              {...(resultResetProps || {})}
               onClick={onReset}
             >
-              {resetText}
+              {resultResetText}
             </Button>
           )}
           { resultActions }
@@ -36,8 +36,8 @@ const DefaultCompleteRender = (props) => {
 DefaultCompleteRender.defaultProps = {
   resultTitle: '操作成功',
   resultSubTitle: '点击返回以再次操作',
-  resetText: '返回',
-  resetProps: { variant: 'outlined' },
+  resultResetText: '返回',
+  resultResetProps: { variant: 'outlined' },
 };
 
 DefaultCompleteRender.propTypes = {
@@ -47,8 +47,8 @@ DefaultCompleteRender.propTypes = {
   resultSubTitle: PropTypes.node,
   showResultReset: PropTypes.bool,
   resultActions: PropTypes.oneOfType([ PropTypes.node, PropTypes.arrayOf(PropTypes.node) ]),
-  resetText: PropTypes.node,
-  resetProps: PropTypes.shape({
+  resultResetText: PropTypes.node,
+  resultResetProps: PropTypes.shape({
     variant: PropTypes.oneOf([ 'text', 'outlined', 'contained' ]),
     size: PropTypes.oneOfType([
       PropTypes.oneOf([ 'small', 'medium', 'large' ]),

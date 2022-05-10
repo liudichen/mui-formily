@@ -3,7 +3,7 @@
  * @Author: 柳涤尘 https://www.iimm.ink
  * @LastEditors: 柳涤尘 liudichen@foxmail.com
  * @Date: 2022-05-09 13:46:02
- * @LastEditTime: 2022-05-09 15:28:26
+ * @LastEditTime: 2022-05-10 10:51:19
  */
 import React from 'react';
 import { StepperProps, SxProps, StepIconProps } from '@mui/material';
@@ -16,6 +16,10 @@ export interface StepsFormProps extends Omit<Omit<StepperProps, 'orientation'>, 
   direction?: 'horizontal'| 'vertical',
   labelPlacement?: 'horizontal'| 'vertical',
   onFinish?: (values: object) => void,
+
+  showStepReset?: boolean,
+  stepResetMode?: 'initial' | 'lastCommit',
+
   rootSx?: SxProps
 }
 

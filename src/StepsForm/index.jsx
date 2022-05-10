@@ -9,9 +9,9 @@ import { sx } from '../propTypes';
 
 const StepsForm = (props) => {
   const {
-    ResultRender, resultTitle, resultSubTitle, showResultReset, resultActions, resetText, onReset, resetProps,
+    ResultRender, resultTitle, resultSubTitle, showResultReset, resultActions, resultResetText, onReset, resultResetProps,
     direction, labelPlacement, activeStep: activeStepProp,
-    initialValues, onFinish,
+    initialValues, onFinish, showStepReset, stepResetMode,
     children,
     // eslint-disable-next-line no-unused-vars
     orientation, alternativeLabel,
@@ -55,7 +55,7 @@ const StepsForm = (props) => {
         >
           { React.Children.map(children, (child, index) => {
             if (!child) { return null; }
-            const { title, subTitle, icon = StepIcon, createFormOptions, onSubmit: childOnSubmit, onPrevious: childOnPrevious } = child.props;
+            const { title, subTitle, icon = StepIcon, createFormOptions, onSubmit: childOnSubmit, onPrevious: childOnPrevious, showStepReset: childShowStepReset, stepResetMode: childStepResetMode, initialValues: childInitialValues } = child.props;
             const previousValues = getPreviousValues(index);
             const onSubmit = async (v) => {
               const submit = index === stepsCount - 1 ? childOnSubmit || onFinish : childOnSubmit;
@@ -70,8 +70,15 @@ const StepsForm = (props) => {
               }
             };
             const extraProps = { current: activeStep, stepIndex: index, stepsCount, onSubmit, onPrevious: () => { childOnPrevious?.(); handlePrevious(); }, previousValues };
+            if (!childStepResetMode) { extraProps.stepResetMode = stepResetMode; }
+            if (typeof childShowStepReset === 'undefined') { extraProps.showStepReset = showStepReset; }
             if (valuesRef.current?.[index]) {
-              extraProps.createFormOptions = createFormOptions?.initialValues ? { ...createFormOptions, initialValues: { ...createFormOptions.initialValues, ...valuesRef.current?.[index] } } : { ...(createFormOptions || {}), initialValues: valuesRef.current?.[index] };
+              extraProps.createFormOptions = createFormOptions?.initialValues ? { ...createFormOptions, initialValues: { ...createFormOptions.initialValues, ...valuesRef.current[index] } } : { ...(createFormOptions || {}), initialValues: valuesRef.current[index] };
+            } else if ((childInitialValues || initialValues?.[index]) && !createFormOptions?.initialValues) {
+              extraProps.createFormOptions = { ...(createFormOptions || {}), initialValues: { ...(initialValues?.[index] || {}), ...childInitialValues } };
+            }
+            if (initialValues?.[index]) {
+              extraProps.initialValues = { ...initialValues[index], ...(childInitialValues || {}) };
             }
             return (
               <Step>
@@ -91,8 +98,8 @@ const StepsForm = (props) => {
             resultSubTitle={resultSubTitle}
             resultActions={resultActions}
             showResultReset={showResultReset}
-            resetText={resetText}
-            resetProps={resetProps}
+            resultResetText={resultResetText}
+            resultResetProps={resultResetProps}
           />
         )}
       </Box>
@@ -125,7 +132,7 @@ const StepsForm = (props) => {
       </Stepper>
       { React.Children.map(children, (child, index) => {
         if (index !== activeStep) { return null; }
-        const { createFormOptions, onSubmit: childOnSubmit, onPrevious: childOnPrevious } = child.props;
+        const { createFormOptions, onSubmit: childOnSubmit, onPrevious: childOnPrevious, showStepReset: childShowStepReset, stepResetMode: childStepResetMode, initialValues: childInitialValues } = child.props;
         const previousValues = getPreviousValues(index);
         const onSubmit = async (v) => {
           const submit = index === stepsCount - 1 ? (childOnSubmit ?? onFinish) : childOnSubmit;
@@ -140,8 +147,15 @@ const StepsForm = (props) => {
           }
         };
         const extraProps = { current: activeStep, stepIndex: index, stepsCount, onSubmit, onPrevious: () => { childOnPrevious?.(); handlePrevious(); }, previousValues };
+        if (!childStepResetMode) { extraProps.stepResetMode = stepResetMode; }
+        if (typeof childShowStepReset === 'undefined') { extraProps.showStepReset = showStepReset; }
         if (valuesRef.current?.[index]) {
-          extraProps.createFormOptions = createFormOptions?.initialValues ? { ...createFormOptions, initialValues: { ...createFormOptions.initialValues, ...valuesRef.current?.[index] } } : { ...(createFormOptions || {}), initialValues: valuesRef.current?.[index] };
+          extraProps.createFormOptions = createFormOptions?.initialValues ? { ...createFormOptions, initialValues: { ...createFormOptions.initialValues, ...valuesRef.current[index] } } : { ...(createFormOptions || {}), initialValues: valuesRef.current[index] };
+        } else if ((childInitialValues || initialValues?.[index]) && !createFormOptions?.initialValues) {
+          extraProps.createFormOptions = { ...(createFormOptions || {}), initialValues: { ...(initialValues?.[index] || {}), ...childInitialValues } };
+        }
+        if (initialValues?.[index]) {
+          extraProps.initialValues = { ...initialValues[index], ...(childInitialValues || {}) };
         }
         return (
           <div>
@@ -157,7 +171,8 @@ const StepsForm = (props) => {
           resultSubTitle={resultSubTitle}
           resultActions={resultActions}
           showResultReset={showResultReset}
-          resetProps={resetProps}
+          resultResetText={resultResetText}
+          resultResetProps={resultResetProps}
         />
       )}
     </Box>
@@ -170,20 +185,29 @@ StepsForm.defaultProps = {
   ResultRender: DefaultCompleteRender,
   showResultReset: true,
   resetText: '返回',
+  showStepReset: false,
+  stepResetMode: 'lastCommit',
 };
 
 StepsForm.propTypes = {
   direction: PropTypes.oneOf([ 'horizontal', 'vertical' ]),
   labelPlacement: PropTypes.oneOf([ 'horizontal', 'vertical' ]),
-  resetText: PropTypes.node,
+  onFinish: PropTypes.func,
+
+  showStepReset: PropTypes.bool, // 是否显示步骤的重置按钮，如果子表单没设置则采用此StepsForm设置
+  stepResetMode: PropTypes.oneOf([ 'initial', 'lastCommit' ]), // 重置模式：重置到初始状态，或者上次提交时的状态
+
+  rootSx: sx,
+
+  // ----- 结果展示部分 ↓↓ -------
+  resultResetText: PropTypes.node,
   onReset: PropTypes.func,
   resultTitle: PropTypes.node,
   resultSubTitle: PropTypes.node,
   showResultReset: PropTypes.bool,
   resultActions: PropTypes.oneOfType([ PropTypes.node, PropTypes.arrayOf(PropTypes.node) ]),
   ResultRender: PropTypes.oneOfType([ PropTypes.func, PropTypes.element ]),
-  onFinish: PropTypes.func,
-  resetProps: PropTypes.shape({
+  resultResetProps: PropTypes.shape({
     variant: PropTypes.oneOf([ 'text', 'outlined', 'contained' ]),
     size: PropTypes.oneOfType([
       PropTypes.oneOf([ 'small', 'medium', 'large' ]),
@@ -196,7 +220,6 @@ StepsForm.propTypes = {
     ]),
     sx: PropTypes.object,
   }),
-  rootSx: sx,
 };
 
 StepsForm.StepForm = StepForm;
