@@ -3,7 +3,7 @@
  * @Author: 柳涤尘 https://www.iimm.ink
  * @LastEditors: 柳涤尘 liudichen@foxmail.com
  * @Date: 2022-05-09 13:46:49
- * @LastEditTime: 2022-05-10 17:10:30
+ * @LastEditTime: 2022-05-10 17:25:51
  */
 import PropTypes from 'prop-types';
 import React, { forwardRef, useImperativeHandle, useMemo } from 'react';
@@ -22,7 +22,8 @@ const StepForm = forwardRef((props, ref) => {
   useImperativeHandle(ref, () => form, [ form ]);
   const handleReset = useMemoizedFn(() => {
     if (stepResetMode === 'initial') {
-      form?.setValues(initialValues || {}, 'overwrite');
+      form?.setInitialValues(initialValues || {}, 'overwrite');
+      form?.reset('*');
     } else if (stepResetMode === 'lastCommit') {
       form?.reset?.('*');
     }

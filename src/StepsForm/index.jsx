@@ -77,7 +77,7 @@ const StepsForm = (props) => {
             } else if ((childInitialValues || initialValues?.[index]) && !createFormOptions?.initialValues) {
               extraProps.createFormOptions = { ...(createFormOptions || {}), initialValues: { ...(initialValues?.[index] || {}), ...childInitialValues } };
             }
-            if (initialValues?.[index]) {
+            if (initialValues?.[index] && Object.keys(initialValues[index]).length) {
               extraProps.initialValues = { ...initialValues[index], ...(childInitialValues || {}) };
             }
             return (
@@ -154,7 +154,7 @@ const StepsForm = (props) => {
         } else if ((childInitialValues || initialValues?.[index]) && !createFormOptions?.initialValues) {
           extraProps.createFormOptions = { ...(createFormOptions || {}), initialValues: { ...(initialValues?.[index] || {}), ...childInitialValues } };
         }
-        if (initialValues?.[index]) {
+        if (initialValues?.[index] && Object.keys(initialValues[index]).length) {
           extraProps.initialValues = { ...initialValues[index], ...(childInitialValues || {}) };
         }
         return (
