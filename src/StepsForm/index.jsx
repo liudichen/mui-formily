@@ -184,7 +184,7 @@ StepsForm.defaultProps = {
   labelPlacement: 'horizontal',
   ResultRender: DefaultCompleteRender,
   showResultReset: true,
-  resetText: '返回',
+  resultResetText: '返回',
   showStepReset: false,
   stepResetMode: 'lastCommit',
 };
