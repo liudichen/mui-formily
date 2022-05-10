@@ -59,7 +59,7 @@ const StepsForm = (props) => {
             const previousValues = getPreviousValues(index);
             const onSubmit = async (v) => {
               const submit = index === stepsCount - 1 ? childOnSubmit || onFinish : childOnSubmit;
-              const res = await submit?.(index === stepsCount - 1 ? { ...previousValues, ...(v || {}) } : v);
+              const res = await submit?.({ ...previousValues, ...(v || {}) });
               if (res !== false) {
                 setValues((s) => {
                   const newS = { ...(s || []) };
@@ -136,7 +136,7 @@ const StepsForm = (props) => {
         const previousValues = getPreviousValues(index);
         const onSubmit = async (v) => {
           const submit = index === stepsCount - 1 ? (childOnSubmit ?? onFinish) : childOnSubmit;
-          const res = await submit?.(index === stepsCount - 1 ? { ...previousValues, ...(v || {}) } : v);
+          const res = await submit?.({ ...previousValues, ...(v || {}) });
           if (res !== false) {
             setValues((s) => {
               const newS = { ...(s || []) };
