@@ -3,7 +3,7 @@
  * @Author: 柳涤尘 https://www.iimm.ink
  * @LastEditors: 柳涤尘 liudichen@foxmail.com
  * @Date: 2022-05-09 13:46:49
- * @LastEditTime: 2022-05-10 15:02:44
+ * @LastEditTime: 2022-05-10 16:52:26
  */
 import PropTypes from 'prop-types';
 import React, { forwardRef, useImperativeHandle, useMemo } from 'react';
@@ -20,10 +20,9 @@ const StepForm = forwardRef((props, ref) => {
   const { stepIndex, stepsCount, onSubmit, onPrevious, submitProps, nextText, previousText, createFormOptions, children, initialValues, showStepReset, stepResetMode, resetProps, resetText } = props;
   const form = useMemo(() => createForm(createFormOptions), []);
   useImperativeHandle(ref, () => form, [ form ]);
-  const handleReset = useMemoizedFn(async () => {
+  const handleReset = useMemoizedFn(() => {
     if (stepResetMode === 'initial') {
-      await form?.setInitialValues?.(initialValues || {});
-      form?.reset?.('*');
+      form?.setValues(initialValues || {});
     } else if (stepResetMode === 'lastCommit') {
       form?.reset?.('*');
     }
@@ -68,7 +67,7 @@ StepForm.defaultProps = {
   nextText: [ '下一步', '提交' ],
   previousText: '上一步',
   resetText: '重置',
-  resetProps: { variant: 'outlined', color: 'sencondary' },
+  resetProps: { variant: 'outlined', color: 'secondary' },
 };
 
 StepForm.propTypes = {
