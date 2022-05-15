@@ -229,7 +229,7 @@ ModalForm.propTypes = {
     className: PropTypes.string,
     disableSpacing: PropTypes.bool,
   }),
-  dialongProps: PropTypes.shape(dialog),
+  dialogProps: PropTypes.shape(dialog),
   onClose: PropTypes.func,
   fullScreen: PropTypes.bool, // false
   fullWidth: PropTypes.bool, // false
