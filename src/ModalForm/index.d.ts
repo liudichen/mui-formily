@@ -3,7 +3,7 @@
  * @Author: 柳涤尘 https://www.iimm.ink
  * @LastEditors: 柳涤尘 liudichen@foxmail.com
  * @Date: 2022-04-15 19:36:59
- * @LastEditTime: 2022-05-10 22:30:07
+ * @LastEditTime: 2022-05-15 15:17:46
  */
 import React from 'react';
 import { DialogActionsProps, DialogContentProps, DialogProps, DialogTitleProps, LinkProps } from '@mui/material';
@@ -20,6 +20,7 @@ interface ref {
 }
 
 export interface ModalFormProps {
+  deps?: any,
   extraActions?: React.ReactNode | React.ReactNode[],
   dataRef?: ref,
   disabled?: boolean,

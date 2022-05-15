@@ -16,13 +16,13 @@ const ModalForm = forwardRef((props, ref) => {
     dialongProps, sx, maxWidth, fullWidth, fullScreen,
     children,
     showClose, showReset, showSubmit,
-    submitText, resetText, submitProps, resetProps, createFormOptions,
+    submitText, resetText, submitProps, resetProps, createFormOptions, deps,
     onFinish, destroyOnClose, extraActions,
     open: openProp, onClose: onCloseProp,
     disabled,
   } = props;
   const [ open, setOpen ] = useSafeState(false);
-  const form = useMemo(() => createForm(createFormOptions), []);
+  const form = useMemo(() => createForm(createFormOptions), [ deps ]);
 
   useImperativeHandle(ref, () => form, [ form ]);
 
@@ -187,6 +187,7 @@ ModalForm.defaultProps = {
   createFormOptions: { validateFirst: true },
 };
 ModalForm.propTypes = {
+  deps: PropTypes.any,
   extraActions: PropTypes.oneOfType([
     PropTypes.node,
     PropTypes.arrayOf(PropTypes.node),
