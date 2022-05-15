@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 import React, { forwardRef, useImperativeHandle, useMemo } from 'react';
-import { useMemoizedFn, useSafeState } from 'ahooks';
+import { useCreation, useMemoizedFn, useSafeState } from 'ahooks';
 import { Dialog, DialogActions, DialogContent, DialogTitle, IconButton, Link } from '@mui/material';
 import { createForm } from '@formily/core';
 import { FormProvider } from '@formily/react';
@@ -16,13 +16,16 @@ const ModalForm = forwardRef((props, ref) => {
     dialongProps, sx, maxWidth, fullWidth, fullScreen,
     children,
     showClose, showReset, showSubmit,
-    submitText, resetText, submitProps, resetProps, createFormOptions, deps,
+    submitText, resetText, submitProps, resetProps, createFormOptions, deps, memo,
     onFinish, destroyOnClose, extraActions,
     open: openProp, onClose: onCloseProp,
     disabled,
   } = props;
   const [ open, setOpen ] = useSafeState(false);
-  const form = useMemo(() => createForm(createFormOptions), [ deps ]);
+  const dp = useCreation(() => {
+    return memo ? [ deps ] : undefined;
+  }, [ memo ]);
+  const form = useMemo(() => createForm(createFormOptions), dp);
 
   useImperativeHandle(ref, () => form, [ form ]);
 
@@ -185,8 +188,10 @@ ModalForm.defaultProps = {
   resetText: '重置',
   submitText: '提交',
   createFormOptions: { validateFirst: true },
+  memo: true,
 };
 ModalForm.propTypes = {
+  memo: PropTypes.bool,
   deps: PropTypes.any,
   extraActions: PropTypes.oneOfType([
     PropTypes.node,
