@@ -19,6 +19,7 @@ export { default as RadioGroup, RadioGroupProps } from './RadioGroup';
 export { default as Upload, UploadProps } from './Upload';
 export { default as Transfer, TransferProps } from './Transfer';
 export { default as EditableTable, EditableTableProps } from './EditableTable';
+export { default as DocumentContent, DocumentContentProps } from './DocumentContent';
 
 export { default as Reset, ResetProps } from './Reset';
 export { default as Submit, SubmitProps } from './Submit';

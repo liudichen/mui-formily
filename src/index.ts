@@ -3,7 +3,7 @@
  * @Author: 柳涤尘 https://www.iimm.ink
  * @LastEditors: 柳涤尘 liudichen@foxmail.com
  * @Date: 2022-04-11 22:17:08
- * @LastEditTime: 2022-05-09 20:07:07
+ * @LastEditTime: 2022-05-16 17:24:13
  */
 export { default as Input, InputProps } from './Input';
 export { default as Select, SelectProps } from './Select';
@@ -14,6 +14,7 @@ export { default as RadioGroup, RadioGroupProps } from './RadioGroup';
 export { default as Upload, UploadProps } from './Upload';
 export { default as Transfer, TransferProps } from './Transfer';
 export { default as EditableTable, EditableTableProps } from './EditableTable';
+export { default as DocumentContent, DocumentContentProps } from './DocumentContent';
 
 export { default as Reset, ResetProps } from './Reset';
 export { default as Submit, SubmitProps } from './Submit';
