@@ -163,7 +163,7 @@ const StepsForm = (props) => {
           </div>
         );
       }) }
-      { activeStep === stepsCount && (
+      { activeStep === stepsCount && stepsCount !== 0 && (
         <ResultRender
           onReset={handleReset}
           values={getPreviousValues(stepsCount)}
