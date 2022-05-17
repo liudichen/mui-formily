@@ -3,10 +3,11 @@
  * @Author: 柳涤尘 https://www.iimm.ink
  * @LastEditors: 柳涤尘 liudichen@foxmail.com
  * @Date: 2022-05-09 13:46:49
- * @LastEditTime: 2022-05-10 17:25:51
+ * @LastEditTime: 2022-05-17 17:10:03
  */
 import PropTypes from 'prop-types';
 import React, { forwardRef, useImperativeHandle, useMemo } from 'react';
+import { useCreation } from 'ahooks';
 import { createForm } from '@formily/core';
 import { FormProvider } from '@formily/react';
 import { Button, Grid } from '@mui/material';
@@ -17,8 +18,9 @@ import { createFormOptions } from '../../propTypes';
 import { useMemoizedFn } from 'ahooks';
 
 const StepForm = forwardRef((props, ref) => {
-  const { stepIndex, stepsCount, onSubmit, onPrevious, submitProps, nextText, previousText, createFormOptions, children, initialValues, showStepReset, stepResetMode, resetProps, resetText } = props;
-  const form = useMemo(() => createForm(createFormOptions), []);
+  const { stepIndex, stepsCount, onSubmit, onPrevious, submitProps, nextText, previousText, createFormOptions, children, initialValues, showStepReset, stepResetMode, resetProps, resetText, memo, deps } = props;
+  const memoDeps = useCreation(() => (memo ? (deps ? [ deps ] : []) : undefined), [ memo, deps ]);
+  const form = useMemo(() => createForm(createFormOptions), memoDeps);
   useImperativeHandle(ref, () => form, [ form ]);
   const handleReset = useMemoizedFn(() => {
     if (stepResetMode === 'initial') {
@@ -69,6 +71,7 @@ StepForm.defaultProps = {
   previousText: '上一步',
   resetText: '重置',
   resetProps: { variant: 'outlined', color: 'secondary' },
+  memo: true,
 };
 
 StepForm.propTypes = {
@@ -96,6 +99,8 @@ StepForm.propTypes = {
 
   //-------------------
   createFormOptions,
+  memo: PropTypes.bool,
+  deps: PropTypes.any,
   onSubmit: PropTypes.func,
   onPrevious: PropTypes.func,
   previousText: PropTypes.node,

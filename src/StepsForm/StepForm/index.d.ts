@@ -3,7 +3,7 @@
  * @Author: 柳涤尘 https://www.iimm.ink
  * @LastEditors: 柳涤尘 liudichen@foxmail.com
  * @Date: 2022-05-09 13:46:59
- * @LastEditTime: 2022-05-10 10:35:21
+ * @LastEditTime: 2022-05-17 17:14:08
  */
 import React from 'react';
 import { IFormProps, Form } from '@formily/core';
@@ -30,6 +30,8 @@ export interface StepFormProps {
   stepResetMode: 'initial' | 'lastCommit', // 重置模式：重置到初始状态，或者上次提交时的状态
 
   createFormOptions?: IFormProps,
+  memeo?: boolean,
+  deps?: any,
   onSubmit?: (values: object) => void,
   onPrevious?: () => void,
   previousText?: React.ReactNode,
