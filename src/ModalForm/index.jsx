@@ -23,7 +23,7 @@ const ModalForm = forwardRef((props, ref) => {
   } = props;
   const [ open, setOpen ] = useSafeState(false);
   const dp = useCreation(() => {
-    return memo ? [ deps ] : undefined;
+    return memo ? (deps ? [ deps ] : []) : undefined;
   }, [ memo, deps ]);
   const form = useMemo(() => createForm(createFormOptions), dp);
 
