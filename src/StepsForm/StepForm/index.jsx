@@ -8,9 +8,9 @@ import { LoadingButton } from '@mui/lab';
 import { Space } from 'mui-component';
 
 const StepForm = observer((props) => {
-  const { stepIndex, stepsCount, onFinish, onPrevious, nextProps, nextText, previousText, previousProps, children, handleStepChange, name,
+  const { stepIndex, stepsCount, onFinish, onPrevious, nextProps, nextText, previousText, previousProps, children, handleStepChange, onSubmitFail,
     // eslint-disable-next-line no-unused-vars
-    title, subTitle, icon,
+    title, subTitle, icon, name,
     ...restProps } = props;
   const [ loading, setLoading ] = useSafeState(false);
   const field = useParentForm();
@@ -39,7 +39,7 @@ const StepForm = observer((props) => {
         setLoading(false);
       }
     } catch (error) {
-      console.log(`stepForm-${name ?? stepIndex}-SubmitError`, error);
+      onSubmitFail?.(error, toJS(field?.value));
       setLoading(false);
     }
   });
@@ -106,6 +106,7 @@ StepForm.propTypes = {
 
   //-------------------
   onFinish: PropTypes.func,
+  onSubmitFail: PropTypes.func,
   onPrevious: PropTypes.func,
   previousText: PropTypes.node,
   nextText: PropTypes.arrayOf(PropTypes.node),

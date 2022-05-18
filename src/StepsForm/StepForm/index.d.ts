@@ -3,7 +3,7 @@
  * @Author: 柳涤尘 https://www.iimm.ink
  * @LastEditors: 柳涤尘 liudichen@foxmail.com
  * @Date: 2022-05-09 13:46:59
- * @LastEditTime: 2022-05-18 15:11:43
+ * @LastEditTime: 2022-05-18 20:28:40
  */
 import React from 'react';
 import { StepIconProps, ButtonProps, BoxProps } from '@mui/material';
@@ -25,6 +25,7 @@ export interface StepFormProps extends BoxProps {
 
   handleStepChange?: (direction?: 'next' | 'previous' | number) => void,
   onFinish?: (values?: object, allValues?: object) => void,
+  onSubmitFail?: (error?: any, fieldVaue?: object) => void,
   onPrevious?: () => void,
   previousText?: React.ReactNode,
   previousProps?: Omit<ButtonProps, 'onClick'>,
