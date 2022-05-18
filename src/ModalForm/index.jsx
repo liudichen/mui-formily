@@ -16,15 +16,15 @@ const ModalForm = forwardRef((props, ref) => {
     dialongProps, sx, maxWidth, fullWidth, fullScreen,
     children,
     showClose, showReset, showSubmit,
-    submitText, resetText, submitProps, resetProps, createFormOptions, deps, memo,
+    submitText, resetText, submitProps, resetProps, createFormOptions, memo,
     onFinish, destroyOnClose, extraActions,
     open: openProp, onClose: onCloseProp,
     disabled,
   } = props;
   const [ open, setOpen ] = useSafeState(false);
   const dp = useCreation(() => {
-    return memo ? (deps ? [ deps ] : []) : undefined;
-  }, [ memo, deps ]);
+    return memo ? [ ] : undefined;
+  }, [ memo ]);
   const form = useMemo(() => createForm(createFormOptions), dp);
 
   useImperativeHandle(ref, () => form, [ form ]);
@@ -192,14 +192,10 @@ ModalForm.defaultProps = {
 };
 ModalForm.propTypes = {
   memo: PropTypes.bool,
-  deps: PropTypes.any,
   extraActions: PropTypes.oneOfType([
     PropTypes.node,
     PropTypes.arrayOf(PropTypes.node),
   ]),
-  dataRef: PropTypes.shape({
-    current: PropTypes.any,
-  }),
   disabled: PropTypes.bool,
   triggerProps: PropTypes.shape({
     sx: PropTypes.object,
