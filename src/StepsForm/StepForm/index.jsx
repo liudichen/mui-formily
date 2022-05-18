@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 import React from 'react';
-import { useMemoizedFn } from 'ahooks';
+import { useMemoizedFn, useSafeState } from 'ahooks';
 import { toJS } from '@formily/reactive';
 import { observer, useParentForm } from '@formily/react';
 import { Box, Button, Grid } from '@mui/material';
@@ -12,7 +12,7 @@ const StepForm = observer((props) => {
     // eslint-disable-next-line no-unused-vars
     title, subTitle, icon,
     ...restProps } = props;
-  const [ loading, setLoading ] = React.useState(false);
+  const [ loading, setLoading ] = useSafeState(false);
   const field = useParentForm();
   const onSubmit = useMemoizedFn(async () => {
     try {

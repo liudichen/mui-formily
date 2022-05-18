@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
-import React, { useEffect, useMemo, useState } from 'react';
-import { useMemoizedFn } from 'ahooks';
+import React, { useEffect, useMemo } from 'react';
+import { useMemoizedFn, useSafeState } from 'ahooks';
 import { createForm } from '@formily/core';
 import { toJS } from '@formily/reactive';
 import { FormProvider, ObjectField, observer } from '@formily/react';
@@ -18,11 +18,11 @@ const StepsForm = observer((props) => {
     direction, orientation, alternativeLabel, labelPlacement,
     ...restProps
   } = props;
-  const [ stepsCount, setStepCount ] = useState(() => React.Children.count(children));
+  const [ stepsCount, setStepCount ] = useSafeState(() => React.Children.count(children));
   useEffect(() => {
     setStepCount(React.Children.count(children));
   }, [ React.Children.count(children) ]);
-  const [ activeStep, setActiveStep ] = useState(0);
+  const [ activeStep, setActiveStep ] = useSafeState(0);
   const form = useMemo(() => createForm(createFormOptions || { validateFirst: true }), []);
   const handleStepChange = useMemoizedFn((step) => {
     if (typeof step === 'number') {
