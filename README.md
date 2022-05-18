@@ -3,7 +3,7 @@
  * @Author: 柳涤尘 https://www.iimm.ink
  * @LastEditors: 柳涤尘 liudichen@foxmail.com
  * @Date: 2022-04-14 15:06:56
- * @LastEditTime: 2022-05-18 18:42:17
+ * @LastEditTime: 2022-05-18 21:50:54
 -->
 # mui-formily
 mui formily组件
@@ -27,7 +27,6 @@ export { default as RadioGroup, RadioGroupProps } from './RadioGroup';
 export { default as Upload, UploadProps } from './Upload';
 export { default as Transfer, TransferProps } from './Transfer';
 export { default as EditableTable, EditableTableProps } from './EditableTable';
-export { default as DocumentContent, DocumentContentProps } from './DocumentContent';
 
 export { default as Reset, ResetProps } from './Reset';
 export { default as Submit, SubmitProps } from './Submit';
