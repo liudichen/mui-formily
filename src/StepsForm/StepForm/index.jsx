@@ -13,20 +13,20 @@ const StepForm = observer((props) => {
     title, subTitle, icon,
     ...restProps } = props;
   const [ loading, setLoading ] = React.useState(false);
-  const form = useParentForm();
+  const field = useParentForm();
   const onSubmit = useMemoizedFn(async () => {
     try {
       setLoading(true);
-      await form.validate();
-      if (form.valid) {
+      await field.validate();
+      if (field.valid) {
         let res = false;
-        const allValues = toJS(form?.form?.values || {});
+        const allValues = toJS(field?.form?.values || {});
         if (stepIndex + 1 !== stepsCount) {
-          res = await onFinish?.(toJS(form.value), allValues);
+          res = await onFinish?.(toJS(field.value), allValues);
         } else {
           const valuesArr = Object.values(allValues);
           let values = {};
-          for (let i = 0; i < valuesArr; i++) {
+          for (let i = 0; i < valuesArr.length; i++) {
             values = { ...values, ...(valuesArr[i] || {}) };
           }
           res = await onFinish?.(values, allValues);
