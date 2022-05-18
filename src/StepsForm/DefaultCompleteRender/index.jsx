@@ -3,7 +3,7 @@
  * @Author: 柳涤尘 https://www.iimm.ink
  * @LastEditors: 柳涤尘 liudichen@foxmail.com
  * @Date: 2022-05-09 13:46:38
- * @LastEditTime: 2022-05-18 15:08:22
+ * @LastEditTime: 2022-05-18 15:56:32
  */
 import PropTypes from 'prop-types';
 import { useMemoizedFn } from 'ahooks';
@@ -47,7 +47,7 @@ DefaultCompleteRender.defaultProps = {
 };
 
 DefaultCompleteRender.propTypes = {
-  values: PropTypes.func,
+  values: PropTypes.object,
   form: PropTypes.object,
   handleStepChange: PropTypes.func,
   resultTitle: PropTypes.node,
