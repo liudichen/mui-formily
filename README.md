@@ -1,5 +1,13 @@
+<!--
+ * @Description: 
+ * @Author: 柳涤尘 https://www.iimm.ink
+ * @LastEditors: 柳涤尘 liudichen@foxmail.com
+ * @Date: 2022-04-14 15:06:56
+ * @LastEditTime: 2022-05-18 18:42:17
+-->
 # mui-formily
 mui formily组件
+本地测试较少，便用边调，所以版本迭代很快，但实际基本都是修错误
 
 ## Getting Started
 
