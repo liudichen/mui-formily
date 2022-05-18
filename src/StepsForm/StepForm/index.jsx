@@ -1,82 +1,96 @@
-/*
- * @Description:
- * @Author: 柳涤尘 https://www.iimm.ink
- * @LastEditors: 柳涤尘 liudichen@foxmail.com
- * @Date: 2022-05-09 13:46:49
- * @LastEditTime: 2022-05-17 17:10:03
- */
 import PropTypes from 'prop-types';
-import React, { forwardRef, useImperativeHandle, useMemo } from 'react';
-import { useCreation } from 'ahooks';
-import { createForm } from '@formily/core';
-import { FormProvider } from '@formily/react';
-import { Button, Grid } from '@mui/material';
+import React from 'react';
+import { useMemoizedFn } from 'ahooks';
+import { toJS } from '@formily/reactive';
+import { observer, useParentForm } from '@formily/react';
+import { Box, Button, Grid } from '@mui/material';
+import { LoadingButton } from '@mui/lab';
 import { Space } from 'mui-component';
 
-import Submit from '../../Submit';
-import { createFormOptions } from '../../propTypes';
-import { useMemoizedFn } from 'ahooks';
-
-const StepForm = forwardRef((props, ref) => {
-  const { stepIndex, stepsCount, onSubmit, onPrevious, submitProps, nextText, previousText, createFormOptions, children, initialValues, showStepReset, stepResetMode, resetProps, resetText, memo, deps } = props;
-  const memoDeps = useCreation(() => (memo ? (deps ? [ deps ] : []) : undefined), [ memo, deps ]);
-  const form = useMemo(() => createForm(createFormOptions), memoDeps);
-  useImperativeHandle(ref, () => form, [ form ]);
-  const handleReset = useMemoizedFn(() => {
-    if (stepResetMode === 'initial') {
-      form?.setInitialValues(initialValues || {}, 'overwrite');
-      form?.reset('*');
-    } else if (stepResetMode === 'lastCommit') {
-      form?.reset?.('*');
+const StepForm = observer((props) => {
+  const { stepIndex, stepsCount, onFinish, onPrevious, nextProps, nextText, previousText, previousProps, children, handleStepChange, name,
+    // eslint-disable-next-line no-unused-vars
+    title, subTitle, icon,
+    ...restProps } = props;
+  const [ loading, setLoading ] = React.useState(false);
+  const form = useParentForm();
+  const onSubmit = useMemoizedFn(async () => {
+    try {
+      setLoading(true);
+      await form.validate();
+      if (form.valid) {
+        let res = false;
+        const allValues = toJS(form?.form?.values || {});
+        if (stepIndex + 1 !== stepsCount) {
+          res = await onFinish?.(toJS(form.value), allValues);
+        } else {
+          const valuesArr = Object.values(allValues);
+          let values = {};
+          for (let i = 0; i < valuesArr; i++) {
+            values = { ...values, ...(valuesArr[i] || {}) };
+          }
+          res = await onFinish?.(values, allValues);
+        }
+        setLoading(false);
+        if (res !== false) {
+          handleStepChange?.('next');
+        }
+      } else {
+        setLoading(false);
+      }
+    } catch (error) {
+      console.log(`stepForm-${name ?? stepIndex}-SubmitError`, error);
+      setLoading(false);
     }
   });
+  const onPreviousClick = useMemoizedFn(() => {
+    onPrevious?.();
+    handleStepChange?.('previous');
+  });
+
   return (
-    <>
-      <FormProvider form={form}>
-        { children }
-        <Grid container>
-          <Space>
-            { showStepReset && (
-              <Button
-                { ...(resetProps || {})}
-                onClick={handleReset}
-              >
-                { resetText }
-              </Button>
-            )}
+    <Box
+      {...restProps}
+    >
+      <Grid container spacing={1}>
+        <Grid item xs={12}>
+          {children}
+        </Grid>
+        <Grid item xs={12}>
+          <Space sx={{}}>
             { !!stepIndex && (
               <Button
-                onClick={onPrevious}
+                {...(previousProps || {})}
+                onClick={onPreviousClick}
               >
                 {previousText}
               </Button>
             )}
-            <Submit
-              {...(submitProps || {})}
-              onSubmit={onSubmit}
+            <LoadingButton
+              variant='contained'
+              loading={loading}
+              size='small'
+              {...(nextProps || {})}
+              onClick={onSubmit}
             >
               { stepIndex + 1 === stepsCount ? nextText?.[1] : nextText?.[0] }
-            </Submit>
+            </LoadingButton>
           </Space>
         </Grid>
-      </FormProvider>
-    </>
+      </Grid>
+    </Box>
   );
 });
 
 StepForm.defaultProps = {
-  createFormOptions: { validateFirst: true },
-  submitProps: { size: 'small' },
   nextText: [ '下一步', '提交' ],
   previousText: '上一步',
-  resetText: '重置',
-  resetProps: { variant: 'outlined', color: 'secondary' },
-  memo: true,
 };
 
 StepForm.propTypes = {
   // -------------- 1 -------------
   // 此部分props是给stepsForm拦截并使用的
+  name: PropTypes.string,
   title: PropTypes.node,
   subTitle: PropTypes.node,
   icon: PropTypes.oneOfType([ PropTypes.func, PropTypes.element, PropTypes.object ]),
@@ -87,42 +101,15 @@ StepForm.propTypes = {
   current: PropTypes.number, // 当前激活的stepForm的index(从0开始)
   stepIndex: PropTypes.number, // 此步骤的index编号(从0开始)
   stepsCount: PropTypes.number, // StepForm的步骤总数
-  previousValues: PropTypes.object, // 此步骤之前所有步骤的values汇总
+  handleStepChange: PropTypes.func,
   // -------------- 2 -------------
 
-  // -------------- 3 -------------
-  // 融合props
-  initialValues: PropTypes.object, // 直接通过props传递的initialValues，如果createFormOption里指定了initalValues则此值不会生效，而只会用来重置
-  showStepReset: PropTypes.bool, // 是否显示步骤的重置按钮，如果没设置则采用父级StepsForm设置
-  stepResetMode: PropTypes.oneOf([ 'initial', 'lastCommit' ]), // 重置模式：重置到初始状态，或者上次提交时的状态
-  // -------------- 3 -------------
-
   //-------------------
-  createFormOptions,
-  memo: PropTypes.bool,
-  deps: PropTypes.any,
-  onSubmit: PropTypes.func,
+  onFinish: PropTypes.func,
   onPrevious: PropTypes.func,
   previousText: PropTypes.node,
   nextText: PropTypes.arrayOf(PropTypes.node),
-  resetText: PropTypes.node,
-  resetProps: PropTypes.shape({
-    size: PropTypes.oneOfType([
-      PropTypes.oneOf([ 'small', 'medium', 'large' ]),
-      PropTypes.string,
-    ]),
-    disabled: PropTypes.bool,
-    color: PropTypes.oneOfType([
-      PropTypes.oneOf([ 'inherit', 'primary', 'secondary', 'success', 'error', 'info', 'warning' ]),
-      PropTypes.string,
-    ]),
-    variant: PropTypes.oneOf([ 'text', 'outlined', 'contained' ]),
-    sx: PropTypes.object,
-  }),
-  submitProps: PropTypes.shape({
-    onSubmitFailed: PropTypes.func,
-    onSubmitSuccess: PropTypes.func,
-    onClick: PropTypes.func,
+  nextProps: PropTypes.shape({
     size: PropTypes.oneOfType([
       PropTypes.oneOf([ 'small', 'medium', 'large' ]),
       PropTypes.string,
@@ -138,3 +125,4 @@ StepForm.propTypes = {
 };
 
 export default StepForm;
+

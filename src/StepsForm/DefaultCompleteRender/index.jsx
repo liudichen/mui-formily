@@ -3,14 +3,20 @@
  * @Author: 柳涤尘 https://www.iimm.ink
  * @LastEditors: 柳涤尘 liudichen@foxmail.com
  * @Date: 2022-05-09 13:46:38
- * @LastEditTime: 2022-05-10 10:52:51
+ * @LastEditTime: 2022-05-18 15:08:22
  */
 import PropTypes from 'prop-types';
+import { useMemoizedFn } from 'ahooks';
+import { observer } from '@formily/react';
 import { Button } from '@mui/material';
 import { Result, Space } from 'mui-component';
 
-const DefaultCompleteRender = (props) => {
-  const { onReset, resultActions, resultTitle, resultSubTitle, showResultReset, resultResetText, resultResetProps } = props;
+const DefaultCompleteRender = observer((props) => {
+  const { resultActions, resultTitle, resultSubTitle, showResultReset, resultResetText, resultResetProps, handleStepChange, form } = props;
+  const handleReset = useMemoizedFn(() => {
+    form?.reset('*');
+    handleStepChange(0);
+  });
   return (
     <Result
       status='success'
@@ -21,7 +27,7 @@ const DefaultCompleteRender = (props) => {
           { showResultReset && (
             <Button
               {...(resultResetProps || {})}
-              onClick={onReset}
+              onClick={handleReset}
             >
               {resultResetText}
             </Button>
@@ -31,7 +37,7 @@ const DefaultCompleteRender = (props) => {
       }
     />
   );
-};
+});
 
 DefaultCompleteRender.defaultProps = {
   resultTitle: '操作成功',
@@ -41,8 +47,9 @@ DefaultCompleteRender.defaultProps = {
 };
 
 DefaultCompleteRender.propTypes = {
-  onReset: PropTypes.func,
-  values: PropTypes.object,
+  values: PropTypes.func,
+  form: PropTypes.object,
+  handleStepChange: PropTypes.func,
   resultTitle: PropTypes.node,
   resultSubTitle: PropTypes.node,
   showResultReset: PropTypes.bool,

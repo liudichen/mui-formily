@@ -1,99 +1,115 @@
 import PropTypes from 'prop-types';
-import React, { useEffect, useState } from 'react';
-import { useLatest, useMemoizedFn } from 'ahooks';
+import React, { useEffect, useMemo, useState } from 'react';
+import { useMemoizedFn } from 'ahooks';
+import { createForm } from '@formily/core';
+import { toJS } from '@formily/reactive';
+import { FormProvider, ObjectField, observer } from '@formily/react';
 import { Box, Step, StepContent, StepIcon, StepLabel, Stepper } from '@mui/material';
 
 import StepForm from './StepForm';
 import DefaultCompleteRender from './DefaultCompleteRender';
-import { sx } from '../propTypes';
 
-const StepsForm = (props) => {
+const StepsForm = observer((props) => {
   const {
-    ResultRender, resultTitle, resultSubTitle, showResultReset, resultActions, resultResetText, onReset, resultResetProps,
-    direction, labelPlacement, activeStep: activeStepProp,
-    initialValues, onFinish, showStepReset, stepResetMode,
     children,
-    // eslint-disable-next-line no-unused-vars
-    orientation, alternativeLabel,
-    rootSx,
+    createFormOptions, onFinish,
+    ResultRender, resultTitle, resultSubTitle, showResultReset, resultActions, resultResetText, resultResetProps,
+    stepContentProps,
+    direction, orientation, alternativeLabel, labelPlacement,
     ...restProps
   } = props;
   const [ stepsCount, setStepCount ] = useState(() => React.Children.count(children));
   useEffect(() => {
     setStepCount(React.Children.count(children));
   }, [ React.Children.count(children) ]);
-  const [ activeStep, setActiveStep ] = useState(activeStepProp || 0);
-  const [ values, setValues ] = useState(initialValues ?? {});
-  const valuesRef = useLatest(values);
-  const handlePrevious = useMemoizedFn(() => setActiveStep((s) => (s < 1 ? s : s - 1)));
-  const handleNext = useMemoizedFn(() => setActiveStep((s) => (s < stepsCount ? s + 1 : s)));
-  const handleReset = useMemoizedFn(() => {
-    onReset?.();
-    setValues(initialValues ?? {});
-    setActiveStep(0);
-  });
-  const getPreviousValues = useMemoizedFn((index) => {
-    let previousValues = {};
-    for (let i = 0; i < index; i++) {
-      previousValues = {
-        ...previousValues,
-        ...(valuesRef.current?.[i] || {}),
-      };
+  const [ activeStep, setActiveStep ] = useState(0);
+  const form = useMemo(() => createForm(createFormOptions || { validateFirst: true }), []);
+  const handleStepChange = useMemoizedFn((step) => {
+    if (typeof step === 'number') {
+      setActiveStep(step);
+    } else {
+      if (step === 'next') {
+        setActiveStep((s) => s + 1);
+      } else if (step === 'previous') {
+        setActiveStep((s) => (s - 1) || 0);
+      }
     }
-    return previousValues;
   });
-  if (direction === 'vertical') {
-    return (
-      <Box
-        sx={{ width: '100%', ...(rootSx || {}) }}
-      >
+
+  return (
+    <Box>
+      <FormProvider form={form}>
         <Stepper
           activeStep={activeStep}
-          orientation={direction}
-          alternativeLabel={labelPlacement === 'vertical'}
+          orientation={direction ?? orientation}
+          alternativeLabel={alternativeLabel ?? (labelPlacement === 'vertical')}
           {...restProps}
         >
           { React.Children.map(children, (child, index) => {
             if (!child) { return null; }
-            const { title, subTitle, icon = StepIcon, createFormOptions, onSubmit: childOnSubmit, onPrevious: childOnPrevious, showStepReset: childShowStepReset, stepResetMode: childStepResetMode, initialValues: childInitialValues } = child.props;
-            const previousValues = getPreviousValues(index);
-            const onSubmit = async (v) => {
-              const submit = index === stepsCount - 1 ? childOnSubmit || onFinish : childOnSubmit;
-              const res = await submit?.({ ...previousValues, ...(v || {}) });
-              if (res !== false) {
-                setValues((s) => {
-                  const newS = { ...(s || []) };
-                  newS[index] = { ...(v || {}) };
-                  return newS;
-                });
-                handleNext();
-              }
+            const { title, subTitle, icon = StepIcon, onFinish: onFinishProp, name } = child.props;
+            const overwriteProps = {
+              handleStepChange,
+              current: activeStep,
+              stepIndex: index,
+              stepsCount,
             };
-            const extraProps = { current: activeStep, stepIndex: index, stepsCount, onSubmit, onPrevious: () => { childOnPrevious?.(); handlePrevious(); }, previousValues };
-            if (!childStepResetMode) { extraProps.stepResetMode = stepResetMode; }
-            if (typeof childShowStepReset === 'undefined') { extraProps.showStepReset = showStepReset; }
-            if (valuesRef.current?.[index]) {
-              extraProps.createFormOptions = createFormOptions?.initialValues ? { ...createFormOptions, initialValues: { ...createFormOptions.initialValues, ...valuesRef.current[index] } } : { ...(createFormOptions || {}), initialValues: valuesRef.current[index] };
-            } else if ((childInitialValues || initialValues?.[index]) && !createFormOptions?.initialValues) {
-              extraProps.createFormOptions = { ...(createFormOptions || {}), initialValues: { ...(initialValues?.[index] || {}), ...childInitialValues } };
-            }
-            if (initialValues?.[index] && Object.keys(initialValues[index]).length) {
-              extraProps.initialValues = { ...initialValues[index], ...(childInitialValues || {}) };
+            if (!onFinishProp && index + 1 === stepsCount && onFinish) {
+              overwriteProps.onFinish = onFinish;
             }
             return (
               <Step>
-                <StepLabel optional={subTitle} StepIconComponent={icon} >{title}</StepLabel>
-                <StepContent>
-                  { React.cloneElement(child, extraProps)}
-                </StepContent>
+                <StepLabel optional={ subTitle } StepIconComponent={icon}>
+                  { title }
+                </StepLabel>
+                { (direction ?? orientation) === 'vertical' && (
+                  <StepContent {...(stepContentProps || {})}>
+                    <ObjectField name={name ?? index}>
+                      {(_field) => {
+                        return (
+                          <>
+                            {React.cloneElement(child, overwriteProps)}
+                          </>
+                        );
+                      }}
+                    </ObjectField>
+                  </StepContent>
+                )}
               </Step>
             );
           })}
         </Stepper>
-        { activeStep === stepsCount && (
+        { (direction ?? orientation) !== 'vertical' && (
+          React.Children.map(children, (child, index) => {
+            if (!child || index !== activeStep) { return null; }
+            const { onFinish: onFinishProp, name } = child.props;
+            const overwriteProps = {
+              handleStepChange,
+              current: activeStep,
+              stepIndex: index,
+              stepsCount,
+            };
+            if (!onFinishProp && index + 1 === stepsCount && onFinish) {
+              overwriteProps.onFinish = onFinish;
+            }
+            return (
+              <ObjectField name={name ?? index}>
+                {(_field) => {
+                  return (
+                    <Box>
+                      { React.cloneElement(child, overwriteProps)}
+                    </Box>
+                  );
+                }}
+              </ObjectField>
+            );
+          })
+        )}
+        { activeStep === stepsCount && stepsCount !== 0 && (
           <ResultRender
-            onReset={handleReset}
-            values={getPreviousValues(stepsCount)}
+            handleStepChange={handleStepChange}
+            form={form}
+            values={toJS(form?.values)}
             resultTitle={resultTitle}
             resultSubTitle={resultSubTitle}
             resultActions={resultActions}
@@ -102,82 +118,10 @@ const StepsForm = (props) => {
             resultResetProps={resultResetProps}
           />
         )}
-      </Box>
-    );
-  }
-  return (
-    <Box
-      sx={{ width: '100%', ...(rootSx || {}) }}
-    >
-      <Stepper
-        activeStep={activeStep}
-        orientation={direction}
-        alternativeLabel={labelPlacement === 'vertical'}
-        {...restProps}
-      >
-        { React.Children.map(children, (child, _index) => {
-          if (!child) { return null; }
-          const { title, subTitle, icon = StepIcon } = child.props;
-          return (
-            <Step>
-              <StepLabel
-                optional={subTitle}
-                StepIconComponent={icon}
-              >
-                {title}
-              </StepLabel>
-            </Step>
-          );
-        })}
-      </Stepper>
-      { React.Children.map(children, (child, index) => {
-        if (index !== activeStep) { return null; }
-        const { createFormOptions, onSubmit: childOnSubmit, onPrevious: childOnPrevious, showStepReset: childShowStepReset, stepResetMode: childStepResetMode, initialValues: childInitialValues } = child.props;
-        const previousValues = getPreviousValues(index);
-        const onSubmit = async (v) => {
-          const submit = index === stepsCount - 1 ? (childOnSubmit ?? onFinish) : childOnSubmit;
-          const res = await submit?.({ ...previousValues, ...(v || {}) });
-          if (res !== false) {
-            setValues((s) => {
-              const newS = { ...(s || []) };
-              newS[index] = { ...(v || {}) };
-              return newS;
-            });
-            handleNext();
-          }
-        };
-        const extraProps = { current: activeStep, stepIndex: index, stepsCount, onSubmit, onPrevious: () => { childOnPrevious?.(); handlePrevious(); }, previousValues };
-        if (!childStepResetMode) { extraProps.stepResetMode = stepResetMode; }
-        if (typeof childShowStepReset === 'undefined') { extraProps.showStepReset = showStepReset; }
-        if (valuesRef.current?.[index]) {
-          extraProps.createFormOptions = createFormOptions?.initialValues ? { ...createFormOptions, initialValues: { ...createFormOptions.initialValues, ...valuesRef.current[index] } } : { ...(createFormOptions || {}), initialValues: valuesRef.current[index] };
-        } else if ((childInitialValues || initialValues?.[index]) && !createFormOptions?.initialValues) {
-          extraProps.createFormOptions = { ...(createFormOptions || {}), initialValues: { ...(initialValues?.[index] || {}), ...childInitialValues } };
-        }
-        if (initialValues?.[index] && Object.keys(initialValues[index]).length) {
-          extraProps.initialValues = { ...initialValues[index], ...(childInitialValues || {}) };
-        }
-        return (
-          <div>
-            {React.cloneElement(child, extraProps)}
-          </div>
-        );
-      }) }
-      { activeStep === stepsCount && stepsCount !== 0 && (
-        <ResultRender
-          onReset={handleReset}
-          values={getPreviousValues(stepsCount)}
-          resultTitle={resultTitle}
-          resultSubTitle={resultSubTitle}
-          resultActions={resultActions}
-          showResultReset={showResultReset}
-          resultResetText={resultResetText}
-          resultResetProps={resultResetProps}
-        />
-      )}
+      </FormProvider>
     </Box>
   );
-};
+});
 
 StepsForm.defaultProps = {
   direction: 'horizontal',
@@ -185,28 +129,21 @@ StepsForm.defaultProps = {
   ResultRender: DefaultCompleteRender,
   showResultReset: true,
   resultResetText: '返回',
-  showStepReset: false,
-  stepResetMode: 'lastCommit',
 };
 
 StepsForm.propTypes = {
   direction: PropTypes.oneOf([ 'horizontal', 'vertical' ]),
   labelPlacement: PropTypes.oneOf([ 'horizontal', 'vertical' ]),
   onFinish: PropTypes.func,
-
-  showStepReset: PropTypes.bool, // 是否显示步骤的重置按钮，如果子表单没设置则采用此StepsForm设置
-  stepResetMode: PropTypes.oneOf([ 'initial', 'lastCommit' ]), // 重置模式：重置到初始状态，或者上次提交时的状态
-
-  rootSx: sx,
+  createFormOptions: PropTypes.object,
 
   // ----- 结果展示部分 ↓↓ -------
   resultResetText: PropTypes.node,
-  onReset: PropTypes.func,
   resultTitle: PropTypes.node,
   resultSubTitle: PropTypes.node,
   showResultReset: PropTypes.bool,
   resultActions: PropTypes.oneOfType([ PropTypes.node, PropTypes.arrayOf(PropTypes.node) ]),
-  ResultRender: PropTypes.oneOfType([ PropTypes.func, PropTypes.element ]),
+  ResultRender: PropTypes.oneOfType([ PropTypes.func, PropTypes.elementType ]),
   resultResetProps: PropTypes.shape({
     variant: PropTypes.oneOf([ 'text', 'outlined', 'contained' ]),
     size: PropTypes.oneOfType([
