@@ -138,6 +138,7 @@ StepsForm.propTypes = {
   createFormOptions: PropTypes.object,
 
   // ----- 结果展示部分 ↓↓ -------
+  onResultReset: PropTypes.func,
   resultResetText: PropTypes.node,
   resultTitle: PropTypes.node,
   resultSubTitle: PropTypes.node,

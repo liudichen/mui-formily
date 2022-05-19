@@ -3,7 +3,7 @@
  * @Author: 柳涤尘 https://www.iimm.ink
  * @LastEditors: 柳涤尘 liudichen@foxmail.com
  * @Date: 2022-05-09 13:46:38
- * @LastEditTime: 2022-05-18 15:56:32
+ * @LastEditTime: 2022-05-19 12:10:51
  */
 import PropTypes from 'prop-types';
 import { useMemoizedFn } from 'ahooks';
@@ -12,8 +12,9 @@ import { Button } from '@mui/material';
 import { Result, Space } from 'mui-component';
 
 const DefaultCompleteRender = observer((props) => {
-  const { resultActions, resultTitle, resultSubTitle, showResultReset, resultResetText, resultResetProps, handleStepChange, form } = props;
+  const { resultActions, resultTitle, resultSubTitle, showResultReset, resultResetText, resultResetProps, onResultReset, handleStepChange, form } = props;
   const handleReset = useMemoizedFn(() => {
+    onResultReset?.();
     form?.reset('*');
     handleStepChange(0);
   });
@@ -53,6 +54,7 @@ DefaultCompleteRender.propTypes = {
   resultTitle: PropTypes.node,
   resultSubTitle: PropTypes.node,
   showResultReset: PropTypes.bool,
+  onResultReset: PropTypes.func,
   resultActions: PropTypes.oneOfType([ PropTypes.node, PropTypes.arrayOf(PropTypes.node) ]),
   resultResetText: PropTypes.node,
   resultResetProps: PropTypes.shape({

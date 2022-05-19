@@ -3,7 +3,7 @@
  * @Author: 柳涤尘 https://www.iimm.ink
  * @LastEditors: 柳涤尘 liudichen@foxmail.com
  * @Date: 2022-05-09 13:46:43
- * @LastEditTime: 2022-05-18 15:09:18
+ * @LastEditTime: 2022-05-19 12:12:17
  */
 import React from 'react';
 import { Form } from '@formily/core';
@@ -17,6 +17,7 @@ export interface ResultRenderProps {
   values?: object,
   form?: Form,
   resultTitle?: React.ReactNode,
+  onResultReset?: () => void,
   resultSubTitle?: React.ReactNode,
   showResultReset?: boolean, // true,
   resultActions?: React.ReactNode | React.ReactNode[],
