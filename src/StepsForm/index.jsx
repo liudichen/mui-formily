@@ -77,7 +77,7 @@ const StepsForm = observer((props) => {
                 )}
               </Step>
             );
-          })}
+          })?.filter((ele) => !!ele)}
         </Stepper>
         { (direction ?? orientation) !== 'vertical' && (
           React.Children.map(children, (child, index) => {
@@ -103,7 +103,7 @@ const StepsForm = observer((props) => {
                 }}
               </ObjectField>
             );
-          })
+          })?.filter((ele) => !!ele)
         )}
         { activeStep === stepsCount && stepsCount !== 0 && (
           <ResultRender
