@@ -19,9 +19,19 @@ const StepsForm = observer((props) => {
     ...restProps
   } = props;
   const [ stepsCount, setStepCount ] = useSafeState(() => React.Children.count(children));
+  const getCount = useMemoizedFn(() => {
+    let count = 0;
+    React.Children.map(children, (child) => {
+      if (child) {
+        count += 1;
+      }
+    });
+    return count;
+  });
+  const count = getCount();
   useEffect(() => {
-    setStepCount(React.Children.count(children));
-  }, [ React.Children.count(children) ]);
+    setStepCount(count);
+  }, [ count ]);
   const [ activeStep, setActiveStep ] = useSafeState(0);
   const form = useMemo(() => createForm(createFormOptions || { validateFirst: true }), []);
   const handleStepChange = useMemoizedFn((step) => {
@@ -77,7 +87,7 @@ const StepsForm = observer((props) => {
                 )}
               </Step>
             );
-          })?.filter((ele) => !!ele)}
+          })}
         </Stepper>
         { (direction ?? orientation) !== 'vertical' && (
           React.Children.map(children, (child, index) => {
@@ -103,7 +113,7 @@ const StepsForm = observer((props) => {
                 }}
               </ObjectField>
             );
-          })?.filter((ele) => !!ele)
+          })
         )}
         { activeStep === stepsCount && stepsCount !== 0 && (
           <ResultRender
