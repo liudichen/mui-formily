@@ -62,7 +62,7 @@
     "@mui/material": "^5.6.2",
     "ahooks": "^3.3.8",
     "mui-component": "^0.1.13",
-    "mui-formfield": "^0.2.31",
+    "mui-formfield": "^0.2.41",
     "prop-types": "^15.8.1",
     "react": ">=17.0.0",
     "react-dom": ">=17.0.0"
