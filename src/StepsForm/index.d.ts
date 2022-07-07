@@ -3,10 +3,10 @@
  * @Author: 柳涤尘 https://www.iimm.ink
  * @LastEditors: 柳涤尘 liudichen@foxmail.com
  * @Date: 2022-05-09 13:46:02
- * @LastEditTime: 2022-05-18 15:22:18
+ * @LastEditTime: 2022-07-07 09:54:17
  */
 import React from 'react';
-import { IFormProps } from '@formily/core';
+import { IFormProps, Form } from '@formily/core';
 import { StepperProps, StepIconProps } from '@mui/material';
 
 import { ResultRenderProps } from './DefaultCompleteRender';
@@ -17,6 +17,9 @@ export interface StepsFormProps extends StepperProps, Omit<Omit<Omit<ResultRende
   labelPlacement?: 'horizontal'| 'vertical',
   onFinish?: (values?: object, allValues?: object) => void,
   createFormOptions?: IFormProps,
+  formRef?: {
+    current?: Form
+  },
 
   ResultRender?: React.Component<ResultRenderProps> | React.FunctionComponent<ResultRenderProps> | React.ElementType,
 }

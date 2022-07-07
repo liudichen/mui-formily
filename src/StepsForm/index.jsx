@@ -12,7 +12,7 @@ import DefaultCompleteRender from './DefaultCompleteRender';
 const StepsForm = observer((props) => {
   const {
     children,
-    createFormOptions, onFinish,
+    createFormOptions, onFinish, formRef,
     ResultRender, resultTitle, resultSubTitle, showResultReset, resultActions, resultResetText, resultResetProps, onResultReset,
     stepContentProps,
     direction, orientation, alternativeLabel, labelPlacement,
@@ -34,6 +34,11 @@ const StepsForm = observer((props) => {
   }, [ count ]);
   const [ activeStep, setActiveStep ] = useSafeState(0);
   const form = useMemo(() => createForm(createFormOptions || { validateFirst: true }), []);
+  useEffect(() => {
+    if (formRef) {
+      formRef.current = form;
+    }
+  }, [ formRef, form ]);
   const handleStepChange = useMemoizedFn((step) => {
     if (typeof step === 'number') {
       setActiveStep(step);
@@ -148,6 +153,8 @@ StepsForm.propTypes = {
   onFinish: PropTypes.func,
   createFormOptions: PropTypes.object,
 
+
+  formRef: PropTypes.object,
   // ----- 结果展示部分 ↓↓ -------
   onResultReset: PropTypes.func,
   resultResetText: PropTypes.node,
