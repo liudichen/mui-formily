@@ -35,7 +35,7 @@ const StepsForm = observer((props) => {
   const [ activeStep, setActiveStep ] = useSafeState(0);
   const form = useMemo(() => createForm(createFormOptions || { validateFirst: true }), []);
   useEffect(() => {
-    if (formRef) {
+    if (typeof formRef !== 'undefined') {
       formRef.current = form;
     }
   }, [ formRef, form ]);
