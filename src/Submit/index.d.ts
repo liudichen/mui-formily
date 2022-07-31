@@ -3,7 +3,7 @@
  * @Author: 柳涤尘 https://www.iimm.ink
  * @LastEditors: 柳涤尘 liudichen@foxmail.com
  * @Date: 2022-04-15 18:32:20
- * @LastEditTime: 2022-05-05 15:45:22
+ * @LastEditTime: 2022-07-31 09:20:52
  */
 import React from 'react';
 import { ButtonProps } from '../types';
@@ -16,6 +16,7 @@ export interface SubmitProps extends ButtonProps {
   loading?: boolean,
   loadingIndicator?: React.ReactNode,
   loadingPosition?: 'center' | 'start' | 'end',
+  enterKeySubmit?: boolean,
 }
 
 declare const Submit: React.FunctionComponent<SubmitProps>;

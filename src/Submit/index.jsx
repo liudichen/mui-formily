@@ -3,10 +3,11 @@
  * @Author: 柳涤尘 https://www.iimm.ink
  * @LastEditors: 柳涤尘 liudichen@foxmail.com
  * @Date: 2022-04-14 15:22:22
- * @LastEditTime: 2022-05-18 10:37:43
+ * @LastEditTime: 2022-07-31 09:20:56
  */
 import React from 'react';
 import PropTypes from 'prop-types';
+import { useMemoizedFn, useKeyPress } from 'ahooks';
 import { useParentForm, observer } from '@formily/react';
 import { LoadingButton } from '@mui/lab';
 
@@ -15,12 +16,28 @@ const Submit = observer(({
   onSubmitFailed,
   onSubmitSuccess,
   resetOnSuccess,
+  enterKeySubmit,
   loading,
   onClick,
   children,
   ...props
 }) => {
   const form = useParentForm();
+  const autoSubmit = useMemoizedFn(() => {
+    if (!enterKeySubmit) { return; }
+    if (onClick) {
+      if (onClick?.() === false) return;
+    }
+    if (onSubmit) {
+      form.submit(onSubmit).then((res) => {
+        onSubmitSuccess?.(res);
+        if (resetOnSuccess && res === true) {
+          form?.reset('*');
+        }
+      }).catch(onSubmitFailed);
+    }
+  });
+  useKeyPress('enter', () => autoSubmit());
   return (
     <LoadingButton
       {...{
@@ -71,6 +88,7 @@ Submit.propTypes = {
   onSubmitFailed: PropTypes.func,
   onSubmitSuccess: PropTypes.func,
   onClick: PropTypes.func,
+  enterKeySubmit: PropTypes.bool,
   ...LoadingButton.propTypes,
 };
 
