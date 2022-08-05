@@ -3,8 +3,9 @@
  * @Author: 柳涤尘 https://www.iimm.ink
  * @LastEditors: 柳涤尘 liudichen@foxmail.com
  * @Date: 2022-04-11 22:17:08
- * @LastEditTime: 2022-08-05 20:57:28
+ * @LastEditTime: 2022-08-05 22:02:44
  */
+import KeyWords from './KeyWords';
 export { default as Input, InputProps } from './Input';
 export { default as Select, SelectProps } from './Select';
 export { default as Switch, SwitchProps } from './Switch';
@@ -15,7 +16,8 @@ export { default as RadioGroup, RadioGroupProps } from './RadioGroup';
 export { default as Upload, UploadProps } from './Upload';
 export { default as Transfer, TransferProps } from './Transfer';
 export { default as EditableTable, EditableTableProps } from './EditableTable';
-export { default as KeyWords, KeyWordsProps } from './KeyWords';
+export { KeyWordsProps } from './KeyWords';
+export { KeyWords };
 
 
 export { default as Reset, ResetProps } from './Reset';
