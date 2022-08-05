@@ -1,3 +1,10 @@
+/*
+ * @Description:
+ * @Author: 柳涤尘 https://www.iimm.ink
+ * @LastEditors: 柳涤尘 liudichen@foxmail.com
+ * @Date: 2022-08-05 20:25:43
+ * @LastEditTime: 2022-08-05 20:48:09
+ */
 import { connect, mapProps } from '@formily/react';
 import { isVoidField } from '@formily/core';
 import { KeyWords } from 'mui-formfield';
@@ -11,7 +18,6 @@ const FormilyKeyWords = connect(
     readOnly: true,
     disabled: true,
     initialValue: 'defaultValue',
-    dataSource: 'options',
   },
   (props, field) => {
     if (isVoidField(field)) return props;
