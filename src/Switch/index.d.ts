@@ -9,7 +9,7 @@ import React from 'react';
 import { fieldTransformProps } from '../types';
 import { SwitchProps as FieldProps } from 'mui-formfield';
 
-export interface SwitchProps extends Omit<Omit<Omit<FieldProps, 'label'>, 'tooltip'>, 'defaultValue'>, fieldTransformProps {
+export interface SwitchProps extends Omit<FieldProps, 'label'| 'tooltip'|'defaultValue'>, fieldTransformProps {
   initialValue?: any,
 }
 

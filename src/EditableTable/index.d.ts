@@ -13,7 +13,7 @@ type rowType = {
   [key: string]:any
 };
 
-export interface EditableTableProps extends Omit<Omit<Omit<Omit<Omit<FieldProps, 'label'>, 'tooltip'>, 'defaultValue'>, 'options'>, 'rows'>, fieldTransformProps {
+export interface EditableTableProps extends Omit<FieldProps, 'label'|'tooltip'|'defaultValue'|'options'| 'rows'>, fieldTransformProps {
   initialValue?: rowType[]
 }
 

@@ -9,7 +9,7 @@ import React from 'react';
 import { fieldTransformProps, ToggleButtonGroupProps } from '../types';
 import { RadioGroupProps as FieldProps } from 'mui-formfield';
 
-export interface RadioGroupProps extends Omit<Omit<Omit<Omit<FieldProps, 'label'>, 'tooltip'>, 'defaultValue'>, 'options'>, fieldTransformProps {
+export interface RadioGroupProps extends Omit<FieldProps, 'label' | 'tooltip'|'defaultValue'|'options'>, fieldTransformProps {
   initialValue?: any[],
   /**
    * items
