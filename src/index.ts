@@ -15,7 +15,7 @@ export { default as RadioGroup, RadioGroupProps } from './RadioGroup';
 export { default as Upload, UploadProps } from './Upload';
 export { default as Transfer, TransferProps } from './Transfer';
 export { default as EditableTable, EditableTableProps } from './EditableTable';
-export { default as KeyWords } from './KeyWords';
+export { default as KeyWords, KeyWordsProps } from './KeyWords';
 
 
 export { default as Reset, ResetProps } from './Reset';
