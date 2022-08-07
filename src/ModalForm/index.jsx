@@ -54,6 +54,7 @@ const ModalForm = forwardRef((props, ref) => {
             ...(triggerProps || {}),
             onClick: (e) => {
               !disabled && setOpen(true);
+              triggerProps?.onClick?.(e);
             },
           }}
         >
