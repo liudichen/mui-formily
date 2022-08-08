@@ -3,11 +3,11 @@
  * @Author: 柳涤尘 https://www.iimm.ink
  * @LastEditors: 柳涤尘 liudichen@foxmail.com
  * @Date: 2022-04-14 15:22:22
- * @LastEditTime: 2022-08-08 09:08:24
+ * @LastEditTime: 2022-08-08 10:02:13
  */
 import React from 'react';
 import PropTypes from 'prop-types';
-import { useMemoizedFn, useKeyPress } from 'ahooks';
+import { useMemoizedFn, useKeyPress, useCreation } from 'ahooks';
 import { useParentForm, observer } from '@formily/react';
 import { LoadingButton } from '@mui/lab';
 
@@ -20,7 +20,9 @@ const Submit = observer(({
   loading,
   onClick,
   children,
-  keyPressOptions,
+  keyPressEvents,
+  keyPressTarget,
+  keyPressExactMatch,
   ...props
 }) => {
   const form = useParentForm();
@@ -38,7 +40,18 @@ const Submit = observer(({
       }).catch(onSubmitFailed);
     }
   });
-  useKeyPress('enter', () => autoSubmit(), keyPressOptions);
+  const options = useCreation(() => {
+    if (!keyPressEvents && !keyPressTarget && typeof keyPressExactMatch !== 'boolean') return undefined;
+    const Op = {};
+    if (keyPressEvents) Op.envents = keyPressEvents;
+    if (typeof keyPressExactMatch === 'boolean') Op.exactMatch = keyPressExactMatch;
+    if ([ 'number', 'string' ].includes(typeof keyPressTarget)) {
+      Op.target = () => document.getElementById(keyPressTarget);
+    } else if ([ 'object', 'function' ].includes(typeof keyPressTarget)) {
+      Op.target = keyPressTarget;
+    }
+  }, [ keyPressEvents, keyPressExactMatch, keyPressExactMatch ]);
+  useKeyPress('enter', () => autoSubmit(), options);
   return (
     <LoadingButton
       {...{
@@ -90,11 +103,9 @@ Submit.propTypes = {
   onSubmitSuccess: PropTypes.func,
   onClick: PropTypes.func,
   enterKeySubmit: PropTypes.bool,
-  keyPressOptions: PropTypes.shape({
-    target: PropTypes.any,
-    envents: PropTypes.array,
-    exactMatch: PropTypes.bool,
-  }),
+  keyPressTarget: PropTypes.any,
+  keyPressEvents: PropTypes.array,
+  keyPressExactMatch: PropTypes.bool,
   ...LoadingButton.propTypes,
 };
 

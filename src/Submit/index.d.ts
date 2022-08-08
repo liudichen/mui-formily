@@ -3,7 +3,7 @@
  * @Author: 柳涤尘 https://www.iimm.ink
  * @LastEditors: 柳涤尘 liudichen@foxmail.com
  * @Date: 2022-04-15 18:32:20
- * @LastEditTime: 2022-08-08 09:11:08
+ * @LastEditTime: 2022-08-08 10:03:09
  */
 import React from 'react';
 import { ButtonProps } from '../types';
@@ -17,11 +17,9 @@ export interface SubmitProps extends ButtonProps {
   loadingIndicator?: React.ReactNode,
   loadingPosition?: 'center' | 'start' | 'end',
   enterKeySubmit?: boolean,
-  keyPressOptions?: {
-    events?: ('keydown' | 'keyup')[],
-    target?: () => Element | Element | React.MutableRefObject<Element>,
-    exactMatch?: boolean,
-  },
+  keyPressEvents?: ('keydown' | 'keyup')[],
+  keyPressTarget?: () => Element | Element | React.MutableRefObject<Element> | string | number,
+  keyPressExactMatch?: boolean,
 }
 
 declare const Submit: React.FunctionComponent<SubmitProps>;
