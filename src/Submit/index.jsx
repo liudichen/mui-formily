@@ -3,7 +3,7 @@
  * @Author: 柳涤尘 https://www.iimm.ink
  * @LastEditors: 柳涤尘 liudichen@foxmail.com
  * @Date: 2022-04-14 15:22:22
- * @LastEditTime: 2022-08-08 10:02:13
+ * @LastEditTime: 2022-08-08 10:11:35
  */
 import React from 'react';
 import PropTypes from 'prop-types';
@@ -50,7 +50,8 @@ const Submit = observer(({
     } else if ([ 'object', 'function' ].includes(typeof keyPressTarget)) {
       Op.target = keyPressTarget;
     }
-  }, [ keyPressEvents, keyPressExactMatch, keyPressExactMatch ]);
+    return Op;
+  }, [ keyPressEvents, keyPressTarget, keyPressExactMatch ]);
   useKeyPress('enter', () => autoSubmit(), options);
   return (
     <LoadingButton
