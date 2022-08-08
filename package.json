@@ -1,6 +1,6 @@
 {
   "name": "mui-formily",
-  "version": "0.2.26",
+  "version": "0.2.27",
   "scripts": {
     "start": "dumi dev",
     "docs:build": "dumi build",

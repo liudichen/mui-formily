@@ -3,7 +3,7 @@
  * @Author: 柳涤尘 https://www.iimm.ink
  * @LastEditors: 柳涤尘 liudichen@foxmail.com
  * @Date: 2022-04-14 15:22:22
- * @LastEditTime: 2022-07-31 09:20:56
+ * @LastEditTime: 2022-08-08 09:08:24
  */
 import React from 'react';
 import PropTypes from 'prop-types';
@@ -20,6 +20,7 @@ const Submit = observer(({
   loading,
   onClick,
   children,
+  keyPressOptions,
   ...props
 }) => {
   const form = useParentForm();
@@ -37,7 +38,7 @@ const Submit = observer(({
       }).catch(onSubmitFailed);
     }
   });
-  useKeyPress('enter', () => autoSubmit());
+  useKeyPress('enter', () => autoSubmit(), keyPressOptions);
   return (
     <LoadingButton
       {...{
@@ -89,6 +90,11 @@ Submit.propTypes = {
   onSubmitSuccess: PropTypes.func,
   onClick: PropTypes.func,
   enterKeySubmit: PropTypes.bool,
+  keyPressOptions: PropTypes.shape({
+    target: PropTypes.any,
+    envents: PropTypes.array,
+    exactMatch: PropTypes.bool,
+  }),
   ...LoadingButton.propTypes,
 };
 
