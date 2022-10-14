@@ -3,9 +3,8 @@
  * @Author: 柳涤尘 https://www.iimm.ink
  * @LastEditors: 柳涤尘 liudichen@foxmail.com
  * @Date: 2022-05-09 13:46:38
- * @LastEditTime: 2022-05-19 12:10:51
+ * @LastEditTime: 2022-10-14 22:13:53
  */
-import PropTypes from 'prop-types';
 import { useMemoizedFn } from 'ahooks';
 import { observer } from '@formily/react';
 import { Button } from '@mui/material';
@@ -45,31 +44,6 @@ DefaultCompleteRender.defaultProps = {
   resultSubTitle: '点击返回以再次操作',
   resultResetText: '返回',
   resultResetProps: { variant: 'outlined' },
-};
-
-DefaultCompleteRender.propTypes = {
-  values: PropTypes.object,
-  form: PropTypes.object,
-  handleStepChange: PropTypes.func,
-  resultTitle: PropTypes.node,
-  resultSubTitle: PropTypes.node,
-  showResultReset: PropTypes.bool,
-  onResultReset: PropTypes.func,
-  resultActions: PropTypes.oneOfType([ PropTypes.node, PropTypes.arrayOf(PropTypes.node) ]),
-  resultResetText: PropTypes.node,
-  resultResetProps: PropTypes.shape({
-    variant: PropTypes.oneOf([ 'text', 'outlined', 'contained' ]),
-    size: PropTypes.oneOfType([
-      PropTypes.oneOf([ 'small', 'medium', 'large' ]),
-      PropTypes.string,
-    ]),
-    disabled: PropTypes.bool,
-    color: PropTypes.oneOfType([
-      PropTypes.oneOf([ 'inherit', 'primary', 'secondary', 'success', 'error', 'info', 'warning' ]),
-      PropTypes.string,
-    ]),
-    sx: PropTypes.object,
-  }),
 };
 
 export default DefaultCompleteRender;

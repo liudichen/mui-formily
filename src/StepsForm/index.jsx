@@ -1,4 +1,3 @@
-import PropTypes from 'prop-types';
 import React, { useEffect, useMemo } from 'react';
 import { useMemoizedFn, useSafeState } from 'ahooks';
 import { createForm } from '@formily/core';
@@ -145,37 +144,6 @@ StepsForm.defaultProps = {
   ResultRender: DefaultCompleteRender,
   showResultReset: true,
   resultResetText: '返回',
-};
-
-StepsForm.propTypes = {
-  direction: PropTypes.oneOf([ 'horizontal', 'vertical' ]),
-  labelPlacement: PropTypes.oneOf([ 'horizontal', 'vertical' ]),
-  onFinish: PropTypes.func,
-  createFormOptions: PropTypes.object,
-
-
-  formRef: PropTypes.object,
-  // ----- 结果展示部分 ↓↓ -------
-  onResultReset: PropTypes.func,
-  resultResetText: PropTypes.node,
-  resultTitle: PropTypes.node,
-  resultSubTitle: PropTypes.node,
-  showResultReset: PropTypes.bool,
-  resultActions: PropTypes.oneOfType([ PropTypes.node, PropTypes.arrayOf(PropTypes.node) ]),
-  ResultRender: PropTypes.oneOfType([ PropTypes.func, PropTypes.elementType ]),
-  resultResetProps: PropTypes.shape({
-    variant: PropTypes.oneOf([ 'text', 'outlined', 'contained' ]),
-    size: PropTypes.oneOfType([
-      PropTypes.oneOf([ 'small', 'medium', 'large' ]),
-      PropTypes.string,
-    ]),
-    disabled: PropTypes.bool,
-    color: PropTypes.oneOfType([
-      PropTypes.oneOf([ 'inherit', 'primary', 'secondary', 'success', 'error', 'info', 'warning' ]),
-      PropTypes.string,
-    ]),
-    sx: PropTypes.object,
-  }),
 };
 
 StepsForm.StepForm = StepForm;

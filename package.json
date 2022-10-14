@@ -1,6 +1,6 @@
 {
   "name": "mui-formily",
-  "version": "0.2.30",
+  "version": "0.2.31",
   "scripts": {
     "start": "dumi dev",
     "docs:build": "dumi build",
@@ -63,7 +63,6 @@
     "ahooks": "^3.5.2",
     "mui-component": "^0.1.42",
     "mui-formfield": "^0.3.0",
-    "prop-types": "^15.8.1",
     "react": ">=17.0.0",
     "react-dom": ">=17.0.0"
   },

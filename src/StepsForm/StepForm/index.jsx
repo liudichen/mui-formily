@@ -1,4 +1,10 @@
-import PropTypes from 'prop-types';
+/*
+ * @Description:
+ * @Author: 柳涤尘 https://www.iimm.ink
+ * @LastEditors: 柳涤尘 liudichen@foxmail.com
+ * @Date: 2022-10-14 21:48:10
+ * @LastEditTime: 2022-10-14 22:20:30
+ */
 import React from 'react';
 import { useMemoizedFn, useSafeState } from 'ahooks';
 import { toJS } from '@formily/reactive';
@@ -85,44 +91,6 @@ const StepForm = observer((props) => {
 StepForm.defaultProps = {
   nextText: [ '下一步', '提交' ],
   previousText: '上一步',
-};
-
-StepForm.propTypes = {
-  // -------------- 1 -------------
-  // 此部分props是给stepsForm拦截并使用的
-  name: PropTypes.string,
-  title: PropTypes.node,
-  subTitle: PropTypes.node,
-  icon: PropTypes.oneOfType([ PropTypes.func, PropTypes.element, PropTypes.object ]),
-  // -------------- 1 -------------
-
-  // -------------- 2 -------------
-  // 此部分props是由StepsForm组件自动生成并传递的，不要手动传递，可以通过props获取使用
-  current: PropTypes.number, // 当前激活的stepForm的index(从0开始)
-  stepIndex: PropTypes.number, // 此步骤的index编号(从0开始)
-  stepsCount: PropTypes.number, // StepForm的步骤总数
-  handleStepChange: PropTypes.func,
-  // -------------- 2 -------------
-
-  //-------------------
-  onFinish: PropTypes.func,
-  onSubmitFail: PropTypes.func,
-  onPrevious: PropTypes.func,
-  previousText: PropTypes.node,
-  nextText: PropTypes.arrayOf(PropTypes.node),
-  nextProps: PropTypes.shape({
-    size: PropTypes.oneOfType([
-      PropTypes.oneOf([ 'small', 'medium', 'large' ]),
-      PropTypes.string,
-    ]),
-    disabled: PropTypes.bool,
-    color: PropTypes.oneOfType([
-      PropTypes.oneOf([ 'inherit', 'primary', 'secondary', 'success', 'error', 'info', 'warning' ]),
-      PropTypes.string,
-    ]),
-    variant: PropTypes.oneOf([ 'text', 'outlined', 'contained' ]),
-    sx: PropTypes.object,
-  }),
 };
 
 export default StepForm;
