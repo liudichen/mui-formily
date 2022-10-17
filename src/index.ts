@@ -3,7 +3,7 @@
  * @Author: 柳涤尘 https://www.iimm.ink
  * @LastEditors: 柳涤尘 liudichen@foxmail.com
  * @Date: 2022-04-11 22:17:08
- * @LastEditTime: 2022-10-14 21:58:45
+ * @LastEditTime: 2022-10-17 12:44:44
  */
 // import { FormilyModalForm, FormilyModalFormProps, FormilyReset, FormilyResetProps, FormilySelect, FormilySelectProps, FormilySubmit, FormilySubmitProps, documentContentDataPurify } from 'mui-formfield';
 export { default as Input, InputProps } from './Input';
@@ -28,6 +28,8 @@ export {
   FormilySubmit as Submit,
   FormilySubmitProps as SubmitProps,
   documentContentDataPurify,
+  FieldLayout,
+  FieldLayoutProps,
 } from 'mui-formfield';
 
 export { default as StepsForm, StepsFormProps, StepFormProps, ResultRenderProps, StepIconProps } from './StepsForm';
