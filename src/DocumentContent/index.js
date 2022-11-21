@@ -13,7 +13,7 @@ const FormilyDocumentContent = connect(
     initialValue: 'defaultValue',
   },
   (props, field) => {
-    if (isVoidField(field)) return props;
+    if (!field || isVoidField(field)) return props;
     return {
       showHelperText: true,
       fullWidth: true,

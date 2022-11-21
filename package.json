@@ -1,6 +1,6 @@
 {
   "name": "mui-formily",
-  "version": "0.2.31",
+  "version": "0.2.32",
   "scripts": {
     "start": "dumi dev",
     "docs:build": "dumi build",
@@ -53,18 +53,23 @@
       "prettier --parser=typescript --write"
     ]
   },
+  "peerDependencies": {
+    "@emotion/react": "^11.0.0",
+    "@emotion/styled": "^11.0.0",
+    "@mui/icons-material": "^5.10.0",
+    "@mui/material": "^5.10.0",    
+    "react": ">=17.0.0",
+    "react-dom": ">=17.0.0"
+  },
   "dependencies": {
     "@formily/core": "^2.1.11",
     "@formily/react": "^2.1.11",
     "@formily/reactive": "^2.1.11",
     "@mui/icons-material": "^5.8.4",
     "@mui/lab": "5.0.0-alpha.74",
-    "@mui/material": "^5.9.2",
     "ahooks": "^3.5.2",
     "mui-component": "^0.1.42",
-    "mui-formfield": "^0.3.0",
-    "react": ">=17.0.0",
-    "react-dom": ">=17.0.0"
+    "mui-formfield": "^0.3.0"
   },
   "devDependencies": {
     "@babel/eslint-parser": "^7.17.0",

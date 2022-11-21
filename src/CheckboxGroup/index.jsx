@@ -21,7 +21,7 @@ const FormilyCheckboxGroup = connect(
     dataSource: 'options',
   },
   (props, field) => {
-    if (isVoidField(field)) return props;
+    if (!field || isVoidField(field)) return props;
     return {
       showHelperText: true,
       fullWidth: true,
@@ -45,7 +45,7 @@ FormilyCheckboxGroup.Button = connect(
     dataSource: 'options',
   },
   (props, field) => {
-    if (isVoidField(field)) return props;
+    if (!field || isVoidField(field)) return props;
     return {
       showHelperText: true,
       fullWidth: true,
