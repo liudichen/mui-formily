@@ -1,6 +1,6 @@
 {
   "name": "mui-formily",
-  "version": "0.2.32",
+  "version": "0.2.33",
   "scripts": {
     "start": "dumi dev",
     "docs:build": "dumi build",
@@ -57,24 +57,27 @@
     "@emotion/react": "^11.0.0",
     "@emotion/styled": "^11.0.0",
     "@mui/icons-material": "^5.10.0",
-    "@mui/material": "^5.10.0",    
-    "react": ">=17.0.0",
-    "react-dom": ">=17.0.0"
+    "@mui/material": "^5.10.0",
+    "react": "^16.8.0 || ^17.0.0 || ^18.0.0",
+    "react-dom": "^16.8.0 || ^17.0.0 || ^18.0.0"
   },
   "dependencies": {
     "@formily/core": "^2.1.11",
     "@formily/react": "^2.1.11",
     "@formily/reactive": "^2.1.11",
-    "@mui/icons-material": "^5.8.4",
     "@mui/lab": "5.0.0-alpha.74",
     "ahooks": "^3.5.2",
-    "mui-component": "^0.1.42",
-    "mui-formfield": "^0.3.0"
+    "mui-component": "^0.1.45",
+    "mui-formfield": "^0.3.8"
   },
   "devDependencies": {
     "@babel/eslint-parser": "^7.17.0",
     "@babel/plugin-transform-runtime": "^7.17.0",
     "@babel/preset-react": "^7.16.7",
+    "@emotion/react": "^11.0.0",
+    "@emotion/styled": "^11.0.0",
+    "@mui/icons-material": "^5.8.4",
+    "@mui/material": "^5.10.0",
     "@testing-library/jest-dom": "^5.15.1",
     "@testing-library/react": "^12.1.2",
     "@types/jest": "^27.0.3",
@@ -92,6 +95,8 @@
     "gh-pages": "^3.0.0",
     "lint-staged": "^10.0.7",
     "prettier": "^2.2.1",
+    "react": "^17.0.0",
+    "react-dom": "^17.0.0",
     "typescript": "^4.6.3",
     "yorkie": "^2.0.0"
   }
