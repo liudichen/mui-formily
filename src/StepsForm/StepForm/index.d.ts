@@ -7,7 +7,7 @@
  */
 import React from 'react';
 import { StepIconProps, ButtonProps, BoxProps } from '@mui/material';
-import { LoadingButtonProps } from '@mui/lab';
+import { LoadingButtonProps } from 'mui-component';
 
 interface objectValue {
   [key: string] : any,
